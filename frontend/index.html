@@ -1,547 +1,947 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>ResumeIQ — AI Resume Analyzer</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-tailwind.config = {
-  darkMode: "class",
-  theme: {
-    extend: {
-      colors: {
-        "surface-dim": "#131313", "surface": "#131313", "on-tertiary": "#00363e",
-        "tertiary-fixed-dim": "#2fd9f4", "error": "#ffb4ab", "on-primary-fixed": "#001a42",
-        "surface-container": "#201f1f", "secondary-fixed": "#f0dbff", "on-secondary": "#490080",
-        "tertiary-fixed": "#a2eeff", "outline-variant": "#424754", "error-container": "#93000a",
-        "outline": "#8c909f", "secondary-fixed-dim": "#ddb7ff", "secondary": "#ddb7ff",
-        "on-secondary-container": "#d6a9ff", "on-primary-fixed-variant": "#004395",
-        "inverse-primary": "#005ac2", "background": "#131313", "surface-variant": "#353534",
-        "tertiary-container": "#009fb4", "inverse-surface": "#e5e2e1", "on-background": "#e5e2e1",
-        "inverse-on-surface": "#313030", "on-tertiary-container": "#002f36", "on-error": "#690005",
-        "on-primary": "#002e6a", "on-surface-variant": "#c2c6d6", "primary-fixed-dim": "#adc6ff",
-        "surface-container-lowest": "#0e0e0e", "primary-container": "#4d8eff",
-        "primary-fixed": "#d8e2ff", "on-secondary-fixed": "#2c0051",
-        "surface-container-low": "#1c1b1b", "on-error-container": "#ffdad6",
-        "on-tertiary-fixed-variant": "#004e5a", "surface-container-high": "#2a2a2a",
-        "tertiary": "#2fd9f4", "on-tertiary-fixed": "#001f25",
-        "surface-container-highest": "#353534", "on-surface": "#e5e2e1",
-        "surface-bright": "#3a3939", "primary": "#adc6ff", "surface-tint": "#adc6ff",
-        "secondary-container": "#6f00be", "on-primary-container": "#00285d",
-        "on-secondary-fixed-variant": "#6900b3"
-      },
-      borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
-      fontFamily: {
-        "body-lg": ["Inter"], "display-lg-mobile": ["Geist"], "display-lg": ["Geist"],
-        "label-mono": ["JetBrains Mono"], "body-md": ["Inter"], "headline-md": ["Geist"]
-      },
-      fontSize: {
-        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
-        "display-lg-mobile": ["40px", { lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "700" }],
-        "display-lg": ["64px", { lineHeight: "72px", letterSpacing: "-0.04em", fontWeight: "700" }],
-        "label-mono": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500" }],
-        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
-        "headline-md": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "600" }]
-      }
-    }
-  }
-}
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
 <style>
-  body { background-color: #050505; color: #e5e2e1; overflow-x: hidden; position: relative; }
+/* ─── TOKENS ─────────────────────────────────────────────────── */
+:root {
+  --bg:        #040404;
+  --surface:   #0e0e0e;
+  --raised:    #161616;
+  --border:    #212121;
+  --border-lo: #161616;
 
-  .glass-panel {
-    background: rgba(255,255,255,0.03);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255,255,255,0.06);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    position: relative;
+  --t1: #f0f0f0;
+  --t2: #686868;
+  --t3: #333333;
+
+  --em:   #10b981;   /* emerald – matched / success */
+  --em-d: rgba(16,185,129,.10);
+  --em-b: rgba(16,185,129,.20);
+  --em-g: rgba(16,185,129,.30);  /* glow */
+
+  --red:  #ef4444;
+  --red-d: rgba(239,68,68,.10);
+  --red-b: rgba(239,68,68,.20);
+
+  --amb:  #f59e0b;
+  --amb-d: rgba(245,158,11,.10);
+  --amb-b: rgba(245,158,11,.20);
+
+  --r: 10px;
+  --r-lg: 14px;
+}
+
+/* ─── RESET ───────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--t1);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ─── DOT GRID ────────────────────────────────────────────────── */
+/* The Skiper-UI texture: a dot grid that fades to nothing */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, #2a2a2a 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(ellipse 110% 60% at 50% 0%, rgba(0,0,0,.55) 0%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 110% 60% at 50% 0%, rgba(0,0,0,.55) 0%, transparent 100%);
+}
+
+/* All content above the grid layer */
+nav, section, footer, main { position: relative; z-index: 1; }
+
+/* ─── NAV ─────────────────────────────────────────────────────── */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  background: rgba(4,4,4,.82);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border-lo);
+}
+.nav-inner {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: 'Geist', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: -0.04em;
+  color: var(--t1);
+  text-decoration: none;
+}
+/* The little accent dot on the logo — Skiper's signature tiny detail */
+.logo-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--em);
+  box-shadow: 0 0 8px var(--em-g);
+}
+.nav-links {
+  display: flex;
+  gap: 24px;
+  font-size: 13px;
+}
+.nav-links a {
+  color: var(--t2);
+  text-decoration: none;
+  transition: color .18s;
+}
+.nav-links a:hover { color: var(--t1); }
+.badge-api {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--em);
+  background: var(--em-d);
+  border: 1px solid var(--em-b);
+  padding: 4px 11px;
+  border-radius: 999px;
+}
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+}
+
+/* ─── LAYOUT HELPERS ──────────────────────────────────────────── */
+.page-wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+}
+@media (max-width: 900px) {
+  .grid-2 { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .grid-3 { grid-template-columns: 1fr; }
+  .page-wrap { padding: 0 16px; }
+}
+
+/* ─── SECTION LABEL ───────────────────────────────────────────── */
+.sec-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--t3);
+}
+.sec-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-lo);
+}
+
+/* ─── CARD ────────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ─── TEXTAREA ────────────────────────────────────────────────── */
+textarea {
+  display: block;
+  width: 100%;
+  background: var(--raised);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  color: var(--t1);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px;
+  font-weight: 400;
+  line-height: 1.72;
+  padding: 14px 16px;
+  resize: vertical;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+textarea:focus {
+  border-color: var(--border);
+  box-shadow: 0 0 0 3px rgba(16,185,129,.08);
+}
+textarea::placeholder { color: var(--t3); }
+
+/* ─── UPLOAD ZONE ─────────────────────────────────────────────── */
+.upload-zone {
+  display: block;
+  border: 1.5px dashed var(--border);
+  border-radius: var(--r);
+  padding: 28px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+  background: transparent;
+}
+.upload-zone:hover, .upload-zone.drag-on {
+  border-color: var(--em);
+  background: var(--em-d);
+}
+.upload-zone.has-file {
+  border-style: solid;
+  border-color: rgba(16,185,129,.35);
+  background: rgba(16,185,129,.04);
+}
+.upload-icon-wrap {
+  width: 40px; height: 40px;
+  background: var(--raised);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 10px;
+  transition: border-color .2s, background .2s;
+}
+.upload-zone:hover .upload-icon-wrap,
+.upload-zone.drag-on .upload-icon-wrap {
+  border-color: var(--em-b);
+  background: var(--em-d);
+}
+
+/* ─── ANALYZE BUTTON (Skiper-style slide) ─────────────────────── */
+/*
+  Two layers stacked: .btn-face (default) and .btn-loading.
+  On .loading: face slides down and out, loader slides in from top.
+  This is the signature Skiper interaction.
+*/
+.btn-analyze {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 42px;
+  margin-top: 12px;
+  background: var(--t1);
+  color: #080808;
+  border: none;
+  border-radius: var(--r);
+  font-family: 'Geist', sans-serif;
+  font-weight: 700;
+  font-size: 13.5px;
+  letter-spacing: -.01em;
+  cursor: pointer;
+  transition: background .18s, transform .1s;
+}
+.btn-analyze:hover:not(:disabled) { background: #dcdcdc; }
+.btn-analyze:active:not(:disabled) { transform: scale(.99); }
+.btn-analyze:disabled { background: var(--raised); color: var(--t3); cursor: not-allowed; }
+
+.btn-face, .btn-load {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  transition: transform .3s cubic-bezier(.4,0,.2,1), opacity .3s;
+}
+.btn-load {
+  background: var(--raised);
+  color: var(--t2);
+  font-weight: 500;
+  transform: translateY(-100%);
+  opacity: 0;
+}
+.btn-analyze.is-loading .btn-face { transform: translateY(100%); opacity: 0; }
+.btn-analyze.is-loading .btn-load { transform: translateY(0); opacity: 1; }
+
+/* ─── SCORE RING ──────────────────────────────────────────────── */
+.ring-track { stroke: var(--border); }
+.ring-fill {
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1.4s cubic-bezier(.4,0,.2,1), stroke .6s ease, filter .6s ease;
+}
+
+/* ─── SPINNER ─────────────────────────────────────────────────── */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinning { animation: spin .7s linear infinite; }
+
+/* ─── SKILL TAGS ──────────────────────────────────────────────── */
+@keyframes tag-in {
+  from { opacity: 0; transform: scale(.88) translateY(4px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  animation: tag-in .22s forwards;
+  opacity: 0;
+}
+.tag-ok {
+  background: var(--em-d);
+  border: 1px solid var(--em-b);
+  color: #34d399;
+}
+.tag-no {
+  background: var(--red-d);
+  border: 1px solid var(--red-b);
+  color: #fca5a5;
+}
+
+/* ─── RESULT PANEL ────────────────────────────────────────────── */
+@keyframes panel-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.result-panel {
+  display: none;
+  animation: panel-in .35s ease forwards;
+}
+
+/* ─── FADE UP ─────────────────────────────────────────────────── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.fade-up.in { opacity: 1; transform: none; }
+
+/* ─── HOW-IT-WORKS STRIP ──────────────────────────────────────── */
+.how-cell {
+  background: var(--surface);
+  padding: 20px 24px;
+  border-right: 1px solid var(--border);
+}
+.how-cell:last-child { border-right: none; }
+@media (max-width: 640px) {
+  .how-cell {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
   }
-  .glass-panel::before {
-    content: '';
-    position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
-    z-index: -1; margin: -1px;
-    border-radius: inherit;
-    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.01) 100%);
-  }
+  .how-cell:last-child { border-bottom: none; }
+}
 
-  /* Top accent line on cards */
-  .card-accent::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(47,217,244,0.4), transparent);
-  }
-
-  .btn-primary {
-    background: #4d8eff;
-    color: #001a42;
-    box-shadow: 0 0 20px rgba(77,142,255,0.35), inset 0 2px 4px rgba(255,255,255,0.35);
-    transition: all 0.3s ease;
-    font-family: 'Geist', sans-serif;
-    font-weight: 700;
-  }
-  .btn-primary:hover { box-shadow: 0 0 35px rgba(77,142,255,0.55), inset 0 2px 4px rgba(255,255,255,0.35); transform: translateY(-2px); }
-  .btn-primary:active { transform: scale(0.98); }
-  .btn-primary:disabled { background: #1c1b1b; color: #424754; cursor: not-allowed; transform: none; box-shadow: none; }
-
-  .text-gradient { background: linear-gradient(90deg, #adc6ff 0%, #2fd9f4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .text-gradient-animated {
-    background: linear-gradient(270deg, #adc6ff, #2fd9f4, #ddb7ff, #adc6ff);
-    background-size: 300% 300%;
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    animation: gradient-flow 8s ease infinite;
-  }
-  @keyframes gradient-flow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-
-  /* Blobs */
-  @keyframes blob { 0% { transform: translate(0,0) scale(1); } 33% { transform: translate(40px,-60px) scale(1.1); } 66% { transform: translate(-30px,30px) scale(0.9); } 100% { transform: translate(0,0) scale(1); } }
-  .animate-blob { animation: blob 12s infinite alternate; }
-  .animation-delay-2000 { animation-delay: 2s; }
-  .animation-delay-4000 { animation-delay: 4s; }
-
-  /* Cursor */
-  .cursor-glow {
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(47,217,244,0.13) 0%, rgba(111,0,190,0.08) 40%, transparent 70%);
-    border-radius: 50%; position: fixed; pointer-events: none; z-index: 0;
-    transform: translate(-50%,-50%); transition: opacity 0.3s; opacity: 0; mix-blend-mode: screen;
-  }
-
-  /* Scroll progress */
-  #scroll-progress {
-    position: fixed; top: 0; left: 0; width: 0%; height: 3px;
-    background: linear-gradient(90deg, #adc6ff, #2fd9f4);
-    box-shadow: 0 0 10px #2fd9f4; z-index: 9999; transition: width 0.1s ease-out;
-  }
-
-  /* Float */
-  .float-anim { animation: float 6s ease-in-out infinite; }
-  .float-anim-delayed { animation: float 7s ease-in-out infinite; animation-delay: 1s; }
-  @keyframes float { 0% { transform: translateY(0); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0); } }
-
-  /* Entrance */
-  .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
-  .fade-up.visible { opacity: 1; transform: translateY(0); }
-
-  /* Drag */
-  .drag-zone.drag-over { background: rgba(47,217,244,0.07); border-color: #2fd9f4 !important; }
-
-  /* Results */
-  .result-card { opacity: 0; transform: translateY(14px); transition: opacity 0.45s ease, transform 0.45s ease; }
-  .result-card.visible { opacity: 1; transform: translateY(0); }
-
-  /* Skill tag pop */
-  .skill-tag { opacity: 0; transform: scale(0.85); animation: popIn 0.3s forwards; }
-  @keyframes popIn { to { opacity: 1; transform: scale(1); } }
-
-  /* Score ring */
-  .score-fill { stroke-dashoffset: 251.2; transition: stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1); }
-
-  /* Spinner */
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .spinner-anim { animation: spin 0.8s linear infinite; }
-
-  /* Textarea */
-  textarea {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 12px;
-    color: #e5e2e1;
-    padding: 14px 16px;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 300;
-    resize: vertical;
-    width: 100%;
-    outline: none;
-    line-height: 1.65;
-    transition: border-color 0.2s;
-  }
-  textarea:focus { border-color: rgba(47,217,244,0.45); }
-  textarea::placeholder { color: #424754; }
-textarea { background: #ffffff !important; color: #111111 !important; font-weight: 400 !important; }
-  /* Dots loader */
-  .loader-dots::after { content: ''; animation: dots 1.4s steps(4,end) infinite; }
-  @keyframes dots { 0%,20%{content:''} 40%{content:'.'} 60%{content:'..'} 80%,100%{content:'...'} }
-
-  @media (prefers-reduced-motion: reduce) {
-    .float-anim, .float-anim-delayed, .animate-blob { animation: none; }
-    .fade-up { opacity: 1; transform: none; transition: none; }
-    .text-gradient-animated { animation: none; }
-    .cursor-glow { display: none; }
-  }
+/* ─── CARD INNER LABEL ────────────────────────────────────────── */
+.card-lbl {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--t3);
+}
+.lbl-dot { width: 5px; height: 5px; border-radius: 50%; }
 </style>
 </head>
-<body class="font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
 
-<!-- Background Blobs -->
-<div class="fixed inset-0 overflow-hidden -z-10 pointer-events-none">
-  <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-primary rounded-full mix-blend-screen blur-[120px] opacity-[0.18] animate-blob"></div>
-  <div class="absolute top-[20%] right-[-10%] w-[40vw] h-[40vw] bg-secondary rounded-full mix-blend-screen blur-[120px] opacity-[0.18] animate-blob animation-delay-2000"></div>
-  <div class="absolute bottom-[-20%] left-[20%] w-[60vw] h-[60vw] bg-tertiary rounded-full mix-blend-screen blur-[120px] opacity-[0.10] animate-blob animation-delay-4000"></div>
-</div>
+<body>
 
-<div id="scroll-progress"></div>
-<div class="cursor-glow" id="cursor-glow"></div>
+<!-- ═══════════════════════ NAV ════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-inner">
 
-<!-- Nav -->
-<nav class="fixed top-0 w-full bg-black/20 backdrop-blur-xl border-b border-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.3)] z-50">
-  <div class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
-    <div class="font-headline-md text-xl font-bold tracking-tighter flex items-center gap-2">
-      <span class="material-symbols-outlined text-tertiary" style="font-variation-settings:'FILL' 1;">document_scanner</span>
-      <span class="text-gradient" style="font-family:'Geist',sans-serif;">ResumeIQ</span>
+    <a href="/" class="logo">
+      <span class="logo-dot"></span>
+      ResumeIQ
+    </a>
+
+    <div class="nav-links">
+      <a href="#app">Analyzer</a>
+      <a href="#how">How it works</a>
     </div>
-    <div class="hidden md:flex items-center gap-6 text-on-surface-variant text-sm font-medium">
-      <a href="#app" class="hover:text-on-surface transition-colors">Analyzer</a>
-      <a href="#how" class="hover:text-on-surface transition-colors">How it works</a>
-    </div>
-    <div class="flex items-center gap-3">
-      <span class="font-label-mono text-label-mono text-tertiary bg-tertiary/10 border border-tertiary/20 px-3 py-1 rounded-full">LOCAL AI · FREE</span>
-      <a href="#app" class="btn-primary hidden md:block px-5 py-2 rounded-lg text-sm active:scale-95 transition-transform">Get Started</a>
-    </div>
+
+    <span class="badge-api">Groq · Fast</span>
+
   </div>
 </nav>
 
-<!-- Hero -->
-<section class="relative pt-36 pb-16 px-6 max-w-7xl mx-auto flex flex-col items-center text-center fade-up z-10">
-  <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-high border border-white/5 mb-8 text-sm font-medium text-tertiary float-anim">
-    <span class="material-symbols-outlined text-sm">auto_awesome</span>
-    Powered by llama3.2 — runs 100% on your machine
-  </div>
-  <h1 class="font-display-lg-mobile md:text-[64px] md:leading-[72px] font-bold tracking-tighter mb-6 max-w-4xl" style="font-family:'Geist',sans-serif;">
-    Land More Interviews With<br/>
-    <span class="text-gradient-animated">Intelligent Matching</span>
-  </h1>
-  <p class="text-on-surface-variant text-lg max-w-2xl mb-10 font-light">
-    Upload your resume and paste a job description. Get an AI-powered match score, skill-gap analysis, and personalized recommendations — instantly, privately, for free.
-  </p>
-  <!-- Stats row -->
-  <div class="flex flex-wrap items-center justify-center gap-8 text-sm text-on-surface-variant mb-6">
-    <div class="flex items-center gap-2"><span class="material-symbols-outlined text-tertiary text-base">lock</span> No data leaves your machine</div>
-    <div class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-base">bolt</span> Instant analysis</div>
-    <div class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-base">key_off</span> No API key needed</div>
+
+<!-- ═══════════════════════ HERO ═══════════════════════════════ -->
+<section style="padding: 116px 0 44px;" class="fade-up">
+  <div class="page-wrap">
+
+    <!-- Tiny pill — not animated, just clean -->
+    <div style="
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 999px; padding: 5px 14px; margin-bottom: 28px;
+    ">
+      <span class="logo-dot" style="width:5px;height:5px;flex-shrink:0;"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--t2); letter-spacing:.08em; text-transform:uppercase;">
+        Resume · Job Description · Match Score
+      </span>
+    </div>
+
+    <!-- Headline — bold, provocative, human -->
+    <h1 style="
+      font-family: 'Geist', sans-serif;
+      font-size: clamp(40px, 6.5vw, 76px);
+      font-weight: 900;
+      letter-spacing: -.05em;
+      line-height: .95;
+      color: var(--t1);
+      max-width: 720px;
+      margin-bottom: 22px;
+      text-wrap: balance;
+    ">
+      Know exactly why<br/>
+      you're getting<br/>
+      <span style="color: var(--em);">overlooked.</span>
+    </h1>
+
+    <p style="color: var(--t2); font-size: 16px; max-width: 480px; line-height: 1.72; margin-bottom: 32px; font-weight: 300;">
+      Upload your resume. Paste the job description.
+      Get a precise match score, skill-gap breakdown, and
+      AI coaching — powered by Groq.
+    </p>
+
+    <a href="#app" style="
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--t1); color: #080808;
+      font-family: 'Geist', sans-serif; font-weight: 700; font-size: 14px;
+      padding: 11px 22px; border-radius: var(--r);
+      text-decoration: none; transition: background .18s;
+    " onmouseover="this.style.background='#d9d9d9'" onmouseout="this.style.background='var(--t1)'">
+      <span class="material-symbols-outlined" style="font-size:15px;">bolt</span>
+      Run Analysis
+    </a>
+
   </div>
 </section>
 
-<!-- How it works -->
-<section id="how" class="relative py-12 px-6 max-w-7xl mx-auto fade-up z-10">
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-    <div class="glass-panel card-accent rounded-2xl p-6 flex flex-col gap-3 overflow-hidden">
-      <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-        <span class="material-symbols-outlined text-primary text-xl">upload_file</span>
+
+<!-- ═══════════════════════ HOW IT WORKS ═══════════════════════ -->
+<section id="how" style="padding: 0 0 44px;" class="fade-up">
+  <div class="page-wrap">
+
+    <!-- Unified 3-cell strip — editorial, not 3 separate cards -->
+    <div class="grid-3 card" style="overflow:hidden;">
+      <div class="how-cell">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--t3); letter-spacing:.1em;">01</span>
+        <p style="font-family:'Geist',sans-serif; font-weight:700; font-size:14px; color:var(--t1); margin-top:8px; letter-spacing:-.02em;">Upload Resume</p>
+        <p style="color:var(--t2); font-size:12px; margin-top:4px; font-weight:300;">PDF drag-and-drop. Text extracted and cleaned.</p>
       </div>
-      <p class="font-semibold text-on-surface" style="font-family:'Geist',sans-serif;">1. Upload Resume</p>
-      <p class="text-on-surface-variant text-sm font-light leading-relaxed">Drop your PDF resume — text is extracted and cleaned automatically.</p>
-    </div>
-    <div class="glass-panel card-accent rounded-2xl p-6 flex flex-col gap-3 overflow-hidden">
-      <div class="w-10 h-10 rounded-xl bg-tertiary/10 flex items-center justify-center">
-        <span class="material-symbols-outlined text-tertiary text-xl">work</span>
+      <div class="how-cell">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--t3); letter-spacing:.1em;">02</span>
+        <p style="font-family:'Geist',sans-serif; font-weight:700; font-size:14px; color:var(--t1); margin-top:8px; letter-spacing:-.02em;">Paste Job Description</p>
+        <p style="color:var(--t2); font-size:12px; margin-top:4px; font-weight:300;">Any role, any industry. Every keyword cross-referenced.</p>
       </div>
-      <p class="font-semibold text-on-surface" style="font-family:'Geist',sans-serif;">2. Paste Job Description</p>
-      <p class="text-on-surface-variant text-sm font-light leading-relaxed">Paste any job listing. Our TF-IDF engine cross-references every keyword.</p>
-    </div>
-    <div class="glass-panel card-accent rounded-2xl p-6 flex flex-col gap-3 overflow-hidden">
-      <div class="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center">
-        <span class="material-symbols-outlined text-secondary text-xl">analytics</span>
+      <div class="how-cell">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--t3); letter-spacing:.1em;">03</span>
+        <p style="font-family:'Geist',sans-serif; font-weight:700; font-size:14px; color:var(--t1); margin-top:8px; letter-spacing:-.02em;">Get AI Insights</p>
+        <p style="color:var(--t2); font-size:12px; margin-top:4px; font-weight:300;">Score, gaps, and coaching via Groq llama-3.3-70b.</p>
       </div>
-      <p class="font-semibold text-on-surface" style="font-family:'Geist',sans-serif;">3. Get AI Insights</p>
-      <p class="text-on-surface-variant text-sm font-light leading-relaxed">llama3.2 generates a personalized skill-gap report with actionable steps.</p>
     </div>
+
   </div>
 </section>
 
-<!-- App -->
-<section id="app" class="relative py-12 px-6 max-w-7xl mx-auto z-10 fade-up">
-  <div class="flex items-center gap-3 mb-6">
-    <span class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest">Resume Analyzer</span>
-    <div class="flex-1 h-px bg-white/5"></div>
-  </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+<!-- ═══════════════════════ APP ════════════════════════════════ -->
+<section id="app" style="padding: 0 0 100px;" class="fade-up">
+  <div class="page-wrap">
 
-    <!-- LEFT: Inputs -->
-    <div class="flex flex-col gap-5">
+    <div class="sec-label">Resume Analyzer</div>
 
-      <!-- Job Description -->
-      <div class="glass-panel card-accent rounded-2xl p-6 overflow-hidden">
-        <div class="flex items-center gap-2 mb-4">
-          <span class="w-1.5 h-1.5 rounded-full bg-tertiary shadow-[0_0_6px_#2fd9f4]"></span>
-          <span class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest">Job Description</span>
-        </div>
-        <textarea id="jobDesc" rows="9" placeholder="Paste the full job description here — requirements, responsibilities, and skills..."></textarea>
-      </div>
+    <div class="grid-2">
 
-      <!-- File Upload + Button -->
-      <div class="glass-panel card-accent rounded-2xl p-6 overflow-hidden">
-        <div class="flex items-center gap-2 mb-4">
-          <span class="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_6px_#adc6ff]"></span>
-          <span class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest">Your Resume</span>
-        </div>
+      <!-- ── LEFT: INPUTS ─────────────────────────────────────── -->
+      <div style="display:flex; flex-direction:column; gap:12px;">
 
-        <label class="drag-zone flex flex-col items-center justify-center gap-3 p-8 rounded-xl border border-dashed border-white/10 cursor-pointer hover:border-tertiary/40 hover:bg-white/[0.02] transition-all duration-300" id="dropZone" for="resumeFile">
-          <div class="w-14 h-14 rounded-full bg-surface-container-high flex items-center justify-center shadow-[0_0_24px_rgba(47,217,244,0.15)]">
-            <span class="material-symbols-outlined text-2xl text-tertiary" id="uploadIcon">upload_file</span>
+        <!-- Job Description card -->
+        <div class="card" style="padding:20px;">
+          <div class="card-lbl">
+            <span class="lbl-dot" style="background:var(--em);box-shadow:0 0 5px var(--em-g);"></span>
+            Job Description
           </div>
-          <div class="text-center">
-            <p class="font-semibold text-on-surface text-sm" id="uploadText" style="font-family:'Geist',sans-serif;">Drop PDF here or click to browse</p>
-            <p class="text-on-surface-variant text-xs mt-1 font-light">PDF format · max 5MB</p>
+          <textarea id="jobDesc" rows="10"
+            placeholder="Paste the full job description — responsibilities, requirements, preferred skills...">
+          </textarea>
+        </div>
+
+        <!-- Resume upload + CTA -->
+        <div class="card" style="padding:20px;">
+          <div class="card-lbl">
+            <span class="lbl-dot" style="background:var(--t3);"></span>
+            Your Resume
           </div>
-        </label>
-        <input type="file" id="resumeFile" accept=".pdf" class="hidden" onchange="handleFile(this)"/>
 
-        <button id="analyzeBtn" onclick="analyze()"
-          class="btn-primary w-full mt-4 py-3.5 rounded-xl text-sm tracking-wide flex items-center justify-center gap-2 active:scale-95 transition-all">
-          <span class="material-symbols-outlined text-sm">bolt</span>
-          Analyze My Resume
-        </button>
-      </div>
-    </div>
+          <label class="upload-zone" id="dropZone" for="resumeFile">
+            <div class="upload-icon-wrap">
+              <span class="material-symbols-outlined" id="uploadIcon"
+                style="font-size:18px; color:var(--t2);">upload_file</span>
+            </div>
+            <p id="uploadText"
+              style="font-family:'Geist',sans-serif; font-weight:600; font-size:13px; color:var(--t1);">
+              Drop PDF here or click to browse
+            </p>
+            <p style="font-size:11px; color:var(--t3); margin-top:4px; font-weight:300;">PDF · max 5MB</p>
+          </label>
+          <input type="file" id="resumeFile" accept=".pdf" style="display:none;"
+            onchange="handleFile(this)"/>
 
-    <!-- RIGHT: Results -->
-    <div class="flex flex-col gap-5" id="resultsCol">
+          <!-- Skiper-style slide button -->
+          <button id="analyzeBtn" class="btn-analyze" onclick="analyze()">
+            <div class="btn-face">
+              <span class="material-symbols-outlined" style="font-size:15px;">bolt</span>
+              Analyze My Resume
+            </div>
+            <div class="btn-load">
+              <svg class="spinning" width="13" height="13" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="12" cy="12" r="10" stroke-opacity=".15"/>
+                <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/>
+              </svg>
+              Analyzing with Groq
+            </div>
+          </button>
 
-      <!-- Empty state -->
-      <div id="emptyState" class="glass-panel card-accent rounded-2xl p-10 flex flex-col items-center justify-center text-center gap-4 min-h-[440px] overflow-hidden">
-        <div class="w-16 h-16 rounded-2xl bg-surface-container-high flex items-center justify-center opacity-40 float-anim">
-          <span class="material-symbols-outlined text-3xl text-on-surface-variant">analytics</span>
         </div>
-        <div>
-          <p class="text-on-surface font-semibold mb-1" style="font-family:'Geist',sans-serif;">Ready to scan</p>
-          <p class="text-on-surface-variant text-sm font-light opacity-60 max-w-xs">Fill in the job description, upload your resume, and hit Analyze.</p>
-        </div>
       </div>
 
-      <!-- Loader -->
-      <div id="loader" class="hidden glass-panel card-accent rounded-2xl p-10 flex-col items-center justify-center gap-5 min-h-[440px] overflow-hidden">
-        <div class="relative w-12 h-12">
-          <svg class="spinner-anim w-12 h-12 text-tertiary" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.15"/>
-            <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- ── RIGHT: RESULTS ────────────────────────────────────── -->
+      <div id="resultsCol" style="display:flex; flex-direction:column; gap:12px;">
+
+        <!-- Empty state — ghost ring hints at what's coming -->
+        <div id="emptyState" class="card" style="
+          padding: 56px 24px;
+          display: flex; flex-direction:column;
+          align-items:center; justify-content:center;
+          min-height: 420px; text-align:center; gap:18px;
+        ">
+          <!-- Ghost ring: a faint partial arc, pre-visualizing the score -->
+          <svg width="100" height="100" viewBox="0 0 100 100" style="opacity:.1; transform:rotate(-90deg);">
+            <circle cx="50" cy="50" r="45" fill="none"
+              stroke="var(--t2)" stroke-width="4.5"
+              stroke-dasharray="283" stroke-dashoffset="90"
+              stroke-linecap="round"/>
           </svg>
+          <div>
+            <p style="font-family:'Geist',sans-serif; font-weight:600; font-size:15px; color:var(--t2); letter-spacing:-.01em;">
+              Waiting for analysis
+            </p>
+            <p style="font-size:12px; color:var(--t3); margin-top:6px; font-weight:300;">
+              Fill in both fields and click Analyze
+            </p>
+          </div>
         </div>
-        <div class="text-center">
-          <p class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest">Analyzing with llama3.2<span class="loader-dots"></span></p>
-          <p class="text-on-surface-variant text-xs mt-2 font-light opacity-50">This may take 30–60 seconds on first run</p>
-        </div>
-      </div>
 
-      <!-- Score Card -->
-      <div id="scoreCard" class="result-card glass-panel card-accent rounded-2xl p-7 hidden overflow-hidden">
-        <div class="flex items-center gap-6">
-          <div class="relative w-32 h-32 flex-shrink-0">
-            <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="7"/>
-              <circle id="ringFill" cx="50" cy="50" r="40" fill="none"
-                stroke="url(#sg)" stroke-width="7" stroke-linecap="round"
-                stroke-dasharray="251.2" stroke-dashoffset="251.2"
-                style="transition: stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1); filter: drop-shadow(0 0 6px rgba(47,217,244,0.6))"/>
-              <defs>
-                <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#adc6ff"/>
-                  <stop offset="100%" stop-color="#2fd9f4"/>
-                </linearGradient>
-              </defs>
+        <!-- Loader -->
+        <div id="loader" style="display:none;">
+          <div class="card" style="
+            padding: 56px 24px;
+            display:flex; flex-direction:column;
+            align-items:center; justify-content:center;
+            min-height: 420px; gap:18px; text-align:center;
+          ">
+            <svg class="spinning" width="26" height="26" viewBox="0 0 24 24"
+              fill="none" stroke="var(--em)" stroke-width="2">
+              <circle cx="12" cy="12" r="10" stroke-opacity=".12"/>
+              <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/>
             </svg>
-            <div class="absolute inset-0 flex flex-col items-center justify-center">
-              <span id="scoreValue" class="text-3xl font-bold text-on-surface tracking-tighter" style="font-family:'Geist',sans-serif;">0%</span>
-              <span class="text-xs text-tertiary font-medium font-label-mono">match</span>
+            <div>
+              <p style="font-family:'JetBrains Mono',monospace; font-size:10px;
+                color:var(--t2); text-transform:uppercase; letter-spacing:.1em;">
+                Analyzing with Groq
+              </p>
+              <p style="font-size:11px; color:var(--t3); margin-top:6px; font-weight:300;">
+                Usually under 5 seconds
+              </p>
             </div>
           </div>
-          <div class="flex-1">
-            <h2 class="font-bold text-xl tracking-tight mb-2" id="scoreLabel" style="font-family:'Geist',sans-serif;">Match Score</h2>
-            <p class="text-on-surface-variant text-sm leading-relaxed font-light" id="scoreDesc"></p>
-            <div class="mt-4 h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
-              <div id="strengthFill" class="h-full rounded-full bg-gradient-to-r from-primary to-tertiary shadow-[0_0_8px_rgba(47,217,244,0.5)] transition-all duration-1000 ease-out" style="width:0%"></div>
+        </div>
+
+        <!-- ── SCORE CARD ── -->
+        <div id="scoreCard" class="card result-panel" style="padding:28px;">
+          <div style="display:flex; align-items:center; gap:24px;">
+
+            <!-- Ring — the ONE wow moment. Color-reactive + glow. -->
+            <div style="position:relative; width:116px; height:116px; flex-shrink:0;">
+              <svg width="116" height="116" viewBox="0 0 100 100"
+                style="display:block; transform:rotate(-90deg);">
+                <circle class="ring-track" cx="50" cy="50" r="45"
+                  fill="none" stroke-width="5"/>
+                <circle id="ringFill" class="ring-fill" cx="50" cy="50" r="45"
+                  fill="none" stroke="#10b981" stroke-width="5"/>
+              </svg>
+              <div style="
+                position:absolute; inset:0;
+                display:flex; flex-direction:column;
+                align-items:center; justify-content:center;
+                gap:1px;
+              ">
+                <span id="scoreValue" style="
+                  font-family:'Geist',sans-serif;
+                  font-size:27px; font-weight:900;
+                  letter-spacing:-.04em; color:var(--t1);
+                ">0%</span>
+                <span style="
+                  font-family:'JetBrains Mono',monospace;
+                  font-size:9px; color:var(--t3);
+                  letter-spacing:.08em; text-transform:uppercase;
+                ">match</span>
+              </div>
             </div>
+
+            <!-- Label + desc + bar -->
+            <div style="flex:1; min-width:0;">
+              <p id="scoreLabel" style="
+                font-family:'Geist',sans-serif;
+                font-size:20px; font-weight:800;
+                letter-spacing:-.03em;
+                margin-bottom:6px; color:var(--t1);
+              ">Match Score</p>
+              <p id="scoreDesc" style="
+                font-size:13px; color:var(--t2);
+                line-height:1.65; font-weight:300;
+              "></p>
+              <div style="margin-top:14px; height:3px; background:var(--border); border-radius:99px; overflow:hidden;">
+                <div id="strengthFill" style="
+                  height:100%; border-radius:99px;
+                  background:var(--em);
+                  transition: width 1.4s cubic-bezier(.4,0,.2,1), background .6s;
+                  width:0%;
+                "></div>
+              </div>
+            </div>
+
           </div>
         </div>
-      </div>
 
-      <!-- Missing Skills -->
-      <div id="skillsCard" class="result-card glass-panel card-accent rounded-2xl p-6 hidden overflow-hidden">
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined text-error text-base">warning</span>
-            <span class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest">Skills to Add</span>
+        <!-- ── SKILLS CARD — matched left, missing right ── -->
+        <div id="skillsCard" class="card result-panel" style="padding:20px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+
+            <!-- Matched skills (green) -->
+            <div>
+              <div style="display:flex; align-items:center; gap:7px; margin-bottom:12px;">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:10px;
+                  color:var(--t3); text-transform:uppercase; letter-spacing:.1em;">Matched</span>
+                <span id="matchedCount" style="
+                  font-family:'JetBrains Mono',monospace; font-size:10px;
+                  color:var(--em); background:var(--em-d);
+                  border:1px solid var(--em-b);
+                  padding:1px 7px; border-radius:99px;
+                ">0</span>
+              </div>
+              <div id="matchedGrid" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
+              <p id="matchedNote" style="font-size:11px; color:var(--t3); font-weight:300; display:none;">
+                Backend update coming soon
+              </p>
+            </div>
+
+            <!-- Missing skills (red) -->
+            <div>
+              <div style="display:flex; align-items:center; gap:7px; margin-bottom:12px;">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:10px;
+                  color:var(--t3); text-transform:uppercase; letter-spacing:.1em;">Missing</span>
+                <span id="missingCount" style="
+                  font-family:'JetBrains Mono',monospace; font-size:10px;
+                  color:#fca5a5; background:var(--red-d);
+                  border:1px solid var(--red-b);
+                  padding:1px 7px; border-radius:99px;
+                ">0</span>
+              </div>
+              <div id="skillsGrid" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
+            </div>
+
           </div>
-          <span id="skillsCount" class="font-label-mono text-label-mono text-on-surface-variant bg-surface-container px-2 py-0.5 rounded-full"></span>
         </div>
-        <div id="skillsGrid" class="flex flex-wrap gap-2"></div>
-      </div>
 
-      <!-- Recommendations -->
-      <div id="recsCard" class="result-card glass-panel card-accent rounded-2xl p-6 hidden overflow-hidden">
-        <div class="flex items-center gap-2 mb-4">
-          <span class="material-symbols-outlined text-tertiary text-base">lightbulb</span>
-          <span class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest">AI Recommendations</span>
+        <!-- ── RECOMMENDATIONS CARD ── -->
+        <div id="recsCard" class="card result-panel" style="padding:20px;">
+          <div class="card-lbl">
+            <span class="material-symbols-outlined"
+              style="font-size:14px; color:var(--em);">lightbulb</span>
+            AI Recommendations
+          </div>
+          <p id="recText" style="
+            font-size:13.5px; color:var(--t2);
+            line-height:1.82; white-space:pre-wrap; font-weight:300;
+          "></p>
         </div>
-        <p id="recText" class="text-on-surface-variant text-sm leading-[1.8] whitespace-pre-wrap font-light"></p>
+
       </div>
+      <!-- end results col -->
 
     </div>
+    <!-- end grid-2 -->
+
   </div>
 </section>
 
-<!-- Footer -->
-<footer class="border-t border-white/5 mt-20 bg-surface-dim/40 backdrop-blur-md z-10 relative">
-  <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
-    <div class="md:col-span-2">
-      <div class="flex items-center gap-2 mb-3">
-        <span class="material-symbols-outlined text-tertiary" style="font-variation-settings:'FILL' 1;">document_scanner</span>
-        <span class="font-bold text-lg text-gradient" style="font-family:'Geist',sans-serif;">ResumeIQ</span>
-      </div>
-      <p class="text-on-surface-variant text-sm font-light">AI-powered resume analysis that runs 100% locally.<br/>No data stored. No API keys. No cost.</p>
+
+<!-- ═══════════════════════ FOOTER ═════════════════════════════ -->
+<footer style="
+  border-top: 1px solid var(--border-lo);
+  padding: 22px 28px;
+  position: relative; z-index:1;
+">
+  <div style="
+    max-width:1120px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:12px;
+  ">
+    <div style="display:flex; align-items:center; gap:7px;">
+      <span class="logo-dot"></span>
+      <span style="font-family:'Geist',sans-serif; font-weight:800;
+        font-size:13px; letter-spacing:-.03em; color:var(--t2);">ResumeIQ</span>
     </div>
-    <div class="flex flex-col gap-2 text-sm">
-      <a href="#" class="text-on-surface-variant hover:text-tertiary transition-colors">Privacy Policy</a>
-      <a href="#" class="text-on-surface-variant hover:text-tertiary transition-colors">Terms of Service</a>
-      <a href="#" class="text-on-surface-variant hover:text-tertiary transition-colors">GitHub</a>
+    <div style="display:flex; align-items:center; gap:16px; font-size:11.5px; color:var(--t3);">
+      <span>© 2026</span>
+      <span>Powered by <span style="color:var(--em);">Groq</span></span>
+      <a href="https://github.com/adrientdonf/ai-resume-analyzer"
+        style="color:var(--t3); text-decoration:none; transition:color .18s;"
+        onmouseover="this.style.color='var(--t1)'"
+        onmouseout="this.style.color='var(--t3)'">GitHub ↗</a>
     </div>
-  </div>
-  <div class="border-t border-white/5 py-4 text-center">
-    <p class="text-on-surface-variant text-xs font-light">© 2026 ResumeIQ · Powered by <span class="text-tertiary font-medium">llama3.2</span> via Ollama</p>
   </div>
 </footer>
 
+
+<!-- ═══════════════════════ SCRIPT ═════════════════════════════ -->
 <script>
-  // ── Cursor glow ──
-  const cg = document.getElementById('cursor-glow');
-  let mx=0,my=0,gx=0,gy=0;
-  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cg.style.opacity=1; });
-  document.addEventListener('mouseleave', () => { cg.style.opacity=0; });
-  (function glowLoop(){ gx+=(mx-gx)*0.15; gy+=(my-gy)*0.15; cg.style.left=gx+'px'; cg.style.top=gy+'px'; requestAnimationFrame(glowLoop); })();
 
-  // ── Scroll progress ──
-  window.addEventListener('scroll', () => {
-    const s = document.body.scrollTop || document.documentElement.scrollTop;
-    const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    document.getElementById('scroll-progress').style.width = (s/h*100)+'%';
-  });
+// ── Display name map ─────────────────────────────────────────────
+// Why: analyzer.py normalizes tech terms (scikit-learn → scikitlearn)
+// for keyword matching. We map them back to human-readable display names.
+const DISPLAY = {
+  scikitlearn: 'scikit-learn',
+  cicd:        'CI/CD',
+  nodejs:      'Node.js',
+  typescript:  'TypeScript',
+  javascript:  'JavaScript',
+  postgresql:  'PostgreSQL',
+  mongodb:     'MongoDB',
+  tensorflow:  'TensorFlow',
+  pytorch:     'PyTorch',
+  fastapi:     'FastAPI',
+  graphql:     'GraphQL',
+  devops:      'DevOps',
+  mlops:       'MLOps',
+  restapi:     'REST API',
+  numpy:       'NumPy',
+  pandas:      'Pandas',
+  reactjs:     'React',
+  vuejs:       'Vue.js',
+  nextjs:      'Next.js',
+  expressjs:   'Express.js',
+};
+const toDisplay = t => DISPLAY[t.toLowerCase()] || t;
 
-  // ── Intersection observer ──
-  new IntersectionObserver((entries, obs) => {
-    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.08 }).observe && document.querySelectorAll('.fade-up').forEach(el => {
-    new IntersectionObserver((entries, obs) => {
-      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
-    }, { threshold: 0.08 }).observe(el);
-  });
 
-  // ── Drag & drop ──
-  const dz = document.getElementById('dropZone');
-  ['dragenter','dragover'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add('drag-over'); }));
-  ['dragleave','drop'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.remove('drag-over'); }));
-  dz.addEventListener('drop', e => {
-    const f = e.dataTransfer.files[0];
-    if(f && f.type==='application/pdf'){ document.getElementById('resumeFile').files = e.dataTransfer.files; setFile(f.name); }
-  });
+// ── Scroll fade-up ───────────────────────────────────────────────
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
 
-  function handleFile(input){ if(input.files[0]) setFile(input.files[0].name); }
-  function setFile(name){
-    const icon = document.getElementById('uploadIcon');
-    icon.textContent = 'check_circle';
-    icon.style.color = '#2fd9f4';
-    document.getElementById('uploadText').textContent = name;
-    dz.style.borderColor = 'rgba(47,217,244,0.45)';
-    dz.style.background = 'rgba(47,217,244,0.04)';
+
+// ── Drag & drop ──────────────────────────────────────────────────
+const dz = document.getElementById('dropZone');
+['dragenter','dragover'].forEach(ev =>
+  dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add('drag-on'); })
+);
+['dragleave','drop'].forEach(ev =>
+  dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.remove('drag-on'); })
+);
+dz.addEventListener('drop', e => {
+  const f = e.dataTransfer.files[0];
+  if (f && f.type === 'application/pdf') {
+    document.getElementById('resumeFile').files = e.dataTransfer.files;
+    setFile(f.name);
+  }
+});
+
+function handleFile(input) { if (input.files[0]) setFile(input.files[0].name); }
+function setFile(name) {
+  dz.classList.add('has-file');
+  const icon = document.getElementById('uploadIcon');
+  icon.textContent = 'check_circle';
+  icon.style.color = 'var(--em)';
+  document.getElementById('uploadText').textContent = name;
+}
+
+
+// ── Score helpers ─────────────────────────────────────────────────
+// Color-reactive: the ring changes color based on score tier.
+// This makes the result feel meaningful, not just a number.
+function scoreColor(p)  { return p >= 70 ? '#10b981' : p >= 40 ? '#f59e0b' : '#ef4444'; }
+function scoreLabel(p)  { return p >= 70 ? 'Strong Match' : p >= 50 ? 'Good Match' : p >= 30 ? 'Partial Match' : 'Major Gaps'; }
+function scoreDesc(p) {
+  if (p >= 70) return "Your profile aligns strongly with this role. A few targeted additions could push you over 80%.";
+  if (p >= 50) return "Solid foundation. Address the missing skills below to strengthen your application.";
+  if (p >= 30) return "There's a meaningful gap. Use the AI recommendations to tailor your resume for this role.";
+  return "Significant skill gaps detected. Review the missing skills and recommendations carefully before applying.";
+}
+
+function animateScore(target) {
+  const color  = scoreColor(target);
+  const ring   = document.getElementById('ringFill');
+  const bar    = document.getElementById('strengthFill');
+  const valEl  = document.getElementById('scoreValue');
+  const lblEl  = document.getElementById('scoreLabel');
+
+  // Animate number counter
+  let cur = 0;
+  const iv = setInterval(() => {
+    cur = Math.min(cur + target / 55, target);
+    valEl.textContent = Math.round(cur) + '%';
+    if (cur >= target) clearInterval(iv);
+  }, 18);
+
+  // Animate ring fill + glow
+  setTimeout(() => {
+    ring.style.stroke           = color;
+    ring.style.filter           = `drop-shadow(0 0 7px ${color}88)`;
+    ring.style.strokeDashoffset = 283 - (target / 100) * 283;
+    bar.style.background        = color;
+    bar.style.width             = target + '%';
+    lblEl.style.color           = color;
+  }, 60);
+}
+
+
+// ── Main analyze ──────────────────────────────────────────────────
+async function analyze() {
+  const jobDesc = document.getElementById('jobDesc').value.trim();
+  const file    = document.getElementById('resumeFile').files[0];
+
+  if (!jobDesc || !file) {
+    alert('Please paste a job description and upload your resume.');
+    return;
   }
 
-  function getScoreDesc(p){
-    if(p>=75) return 'Excellent match — your profile aligns strongly with this role.';
-    if(p>=50) return 'Good match — a few targeted additions will strengthen your application.';
-    if(p>=30) return 'Moderate match — consider tailoring your resume for this role.';
-    return 'Low match — significant skill gaps detected. See the recommendations below.';
-  }
+  const btn     = document.getElementById('analyzeBtn');
+  const empty   = document.getElementById('emptyState');
+  const loader  = document.getElementById('loader');
 
-  function animateScore(target){
-    let cur=0;
-    const el=document.getElementById('scoreValue');
-    const iv=setInterval(()=>{ cur=Math.min(cur+target/60,target); el.textContent=Math.round(cur)+'%'; if(cur>=target) clearInterval(iv); },16);
-    const offset = 251.2-(target/100)*251.2;
-    setTimeout(()=>{ document.getElementById('ringFill').style.strokeDashoffset=offset; },50);
-    setTimeout(()=>{ document.getElementById('strengthFill').style.width=target+'%'; },50);
-  }
+  // Enter loading state
+  btn.disabled = true;
+  btn.classList.add('is-loading');
+  empty.style.display  = 'none';
+  loader.style.display = 'block';
 
-  async function analyze(){
-    const jobDesc = document.getElementById('jobDesc').value.trim();
-    const file = document.getElementById('resumeFile').files[0];
-    if(!jobDesc||!file) return alert('Please fill in both fields.');
+  // Hide any previous results
+  ['scoreCard','skillsCard','recsCard'].forEach(id => {
+    document.getElementById(id).style.display = 'none';
+  });
 
-    const btn=document.getElementById('analyzeBtn');
-    const empty=document.getElementById('emptyState');
-    const loader=document.getElementById('loader');
+  const fd = new FormData();
+  fd.append('job_description', jobDesc);
+  fd.append('resume', file);
 
-    btn.disabled=true;
-    empty.classList.add('hidden');
-    loader.classList.remove('hidden');
-    loader.classList.add('flex');
-    ['scoreCard','skillsCard','recsCard'].forEach(id=>{
-      const el=document.getElementById(id);
-      el.classList.add('hidden');
-      el.classList.remove('visible');
-    });
+  try {
+    const res  = await fetch('/analyze', { method: 'POST', body: fd });
+    const data = await res.json();
+    loader.style.display = 'none';
 
-    const fd=new FormData();
-    fd.append('job_description',jobDesc);
-    fd.append('resume',file);
+    // ── Score card ────────────────────────────────────────
+    const sc = document.getElementById('scoreCard');
+    sc.style.display = 'block';
+    animateScore(data.match_percent);
+    document.getElementById('scoreLabel').textContent = scoreLabel(data.match_percent);
+    document.getElementById('scoreDesc').textContent  = scoreDesc(data.match_percent);
 
-    try{
-      const res=await fetch('/analyze',{method:'POST',body:fd});
-      const data=await res.json();
+    // ── Skills card ───────────────────────────────────────
+    setTimeout(() => {
+      const sk = document.getElementById('skillsCard');
+      sk.style.display = 'block';
 
-      loader.classList.add('hidden');
-      loader.classList.remove('flex');
+      // Missing skills
+      const missing = (data.missing_skills || []).slice(0, 20);
+      document.getElementById('missingCount').textContent = missing.length;
+      const missingGrid = document.getElementById('skillsGrid');
+      missingGrid.innerHTML = '';
+      missing.forEach((s, i) => {
+        const tag = document.createElement('span');
+        tag.className = 'tag tag-no';
+        tag.style.animationDelay = (i * 28) + 'ms';
+        tag.textContent = toDisplay(s);
+        missingGrid.appendChild(tag);
+      });
 
-      // Score
-      const sc=document.getElementById('scoreCard');
-      sc.classList.remove('hidden');
-      setTimeout(()=>sc.classList.add('visible'),50);
-      animateScore(data.match_percent);
-      document.getElementById('scoreLabel').textContent=data.match_percent+'% Match';
-      document.getElementById('scoreDesc').textContent=getScoreDesc(data.match_percent);
-
-      // Skills
-      setTimeout(()=>{
-        const sk=document.getElementById('skillsCard');
-        sk.classList.remove('hidden');
-        setTimeout(()=>sk.classList.add('visible'),50);
-        const grid=document.getElementById('skillsGrid');
-        grid.innerHTML='';
-        const skills=data.missing_skills.slice(0,20);
-        document.getElementById('skillsCount').textContent=skills.length+' found';
-        skills.forEach((s,i)=>{
-          const tag=document.createElement('span');
-          tag.className='skill-tag bg-error/10 border border-error/20 text-error rounded-lg px-3 py-1.5 text-xs font-label-mono';
-          tag.style.animationDelay=i*35+'ms';
-          tag.textContent=s;
-          grid.appendChild(tag);
+      // Matched skills — ready for when backend returns them
+      // Backend doesn't return these yet — we'll add that in the next commit
+      const matched = (data.matched_skills || []).slice(0, 20);
+      document.getElementById('matchedCount').textContent = matched.length;
+      const matchedGrid = document.getElementById('matchedGrid');
+      matchedGrid.innerHTML = '';
+      if (matched.length > 0) {
+        matched.forEach((s, i) => {
+          const tag = document.createElement('span');
+          tag.className = 'tag tag-ok';
+          tag.style.animationDelay = (i * 28) + 'ms';
+          tag.textContent = toDisplay(s);
+          matchedGrid.appendChild(tag);
         });
-      },300);
+      } else {
+        document.getElementById('matchedNote').style.display = 'block';
+      }
+    }, 220);
 
-      // Recs
-      setTimeout(()=>{
-        const rc=document.getElementById('recsCard');
-        rc.classList.remove('hidden');
-        setTimeout(()=>rc.classList.add('visible'),50);
-        document.getElementById('recText').textContent=data.recommendations;
-      },600);
+    // ── Recs card ─────────────────────────────────────────
+    setTimeout(() => {
+      const rc = document.getElementById('recsCard');
+      rc.style.display = 'block';
+      document.getElementById('recText').textContent = data.recommendations;
+    }, 440);
 
-    }catch(e){
-      loader.classList.add('hidden');
-      loader.classList.remove('flex');
-      empty.classList.remove('hidden');
-      alert('Something went wrong. Make sure the server is running and Ollama is active.');
-    }finally{
-      btn.disabled=false;
-    }
+  } catch (err) {
+    loader.style.display = 'none';
+    empty.style.display  = 'flex';
+    alert('Something went wrong. Make sure the server is running:\nuvicorn backend.main:app --reload');
+  } finally {
+    btn.disabled = false;
+    btn.classList.remove('is-loading');
   }
+}
+
 </script>
 </body>
 </html>
