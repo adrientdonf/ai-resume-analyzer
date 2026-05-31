@@ -78,5 +78,6 @@ Write a short, friendly, personalized skill-gap analysis with 3-5 specific actio
     return {
         "match_percent": score,
         "missing_skills": missing_skills,
+        "matched_skills": sorted(matched, key=len, reverse=True)[:15],
         "recommendations": response.choices[0].message.content
     }
