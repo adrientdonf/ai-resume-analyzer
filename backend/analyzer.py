@@ -1,3 +1,4 @@
+import json
 import re
 import os
 from groq import Groq
@@ -48,6 +49,7 @@ def extract_keywords(text: str) -> set:
     return set(w for w in words if w not in STOP_WORDS and len(w) >= 3)
 
 def match_resume(resume_text: str, job_text: str) -> dict:
+    
     job_keywords = extract_keywords(job_text)
     resume_keywords = extract_keywords(resume_text)
 
@@ -81,3 +83,48 @@ Write a short, friendly, personalized skill-gap analysis with 3-5 specific actio
         "matched_skills": sorted(matched, key=len, reverse=True)[:15],
         "recommendations": response.choices[0].message.content
     }
+def improve_resume(resume_text: str, job_text: str) -> dict:
+    client = Groq(api_key=GROQ_API_KEY)
+
+    prompt = f"""You are an expert resume coach. Analyze this resume against the job description.
+
+Resume:
+{resume_text}
+
+Job Description:
+{job_text}
+
+Return ONLY valid JSON — no markdown, no explanation outside the JSON. Use this exact structure:
+{{
+  "bullet_analysis": [
+    {{"original": "bullet text from resume", "improved": "stronger rewritten version", "action": "improve"}},
+    {{"original": "already strong bullet", "improved": "already strong bullet", "action": "keep"}}
+  ],
+  "improved_resume": "full rewritten resume as plain text optimized for this role",
+  "summary": "2-3 sentences explaining the key changes made"
+}}
+
+Rules:
+- Pick the 6-8 most important bullets to review
+- Mark as 'keep' if already strong, 'improve' if it needs work
+- Improved bullets must start with a strong action verb and be quantified where possible
+- The improved_resume should be a complete, ready-to-use resume"""
+
+    response = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=[{"role": "user", "content": prompt}],
+        max_tokens=2500,
+        temperature=0.2,
+    )
+
+    raw = response.choices[0].message.content.strip()
+
+    try:
+        clean = re.sub(r'^```json|^```|```$', '', raw, flags=re.MULTILINE).strip()
+        return json.loads(clean)
+    except json.JSONDecodeError:
+        return {
+            "bullet_analysis": [],
+            "improved_resume": raw,
+            "summary": "Resume improved. See full text above."
+        }
