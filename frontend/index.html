@@ -20,16 +20,16 @@
   --t2: #686868;
   --t3: #333333;
 
-  --em:   #10b981;   /* emerald – matched / success */
+  --em:   #10b981;
   --em-d: rgba(16,185,129,.10);
   --em-b: rgba(16,185,129,.20);
-  --em-g: rgba(16,185,129,.30);  /* glow */
+  --em-g: rgba(16,185,129,.30);
 
-  --red:  #ef4444;
+  --red:   #ef4444;
   --red-d: rgba(239,68,68,.10);
   --red-b: rgba(239,68,68,.20);
 
-  --amb:  #f59e0b;
+  --amb:   #f59e0b;
   --amb-d: rgba(245,158,11,.10);
   --amb-b: rgba(245,158,11,.20);
 
@@ -37,7 +37,6 @@
   --r-lg: 14px;
 }
 
-/* ─── RESET ───────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
@@ -51,8 +50,6 @@ body {
   overflow-x: hidden;
 }
 
-/* ─── DOT GRID ────────────────────────────────────────────────── */
-/* The Skiper-UI texture: a dot grid that fades to nothing */
 body::before {
   content: '';
   position: fixed;
@@ -65,10 +62,8 @@ body::before {
   -webkit-mask-image: radial-gradient(ellipse 110% 60% at 50% 0%, rgba(0,0,0,.55) 0%, transparent 100%);
 }
 
-/* All content above the grid layer */
 nav, section, footer, main { position: relative; z-index: 1; }
 
-/* ─── NAV ─────────────────────────────────────────────────────── */
 .nav {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -101,7 +96,6 @@ nav, section, footer, main { position: relative; z-index: 1; }
   color: var(--t1);
   text-decoration: none;
 }
-/* The little accent dot on the logo — Skiper's signature tiny detail */
 .logo-dot {
   width: 7px; height: 7px;
   border-radius: 50%;
@@ -130,11 +124,8 @@ nav, section, footer, main { position: relative; z-index: 1; }
   padding: 4px 11px;
   border-radius: 999px;
 }
-@media (max-width: 640px) {
-  .nav-links { display: none; }
-}
+@media (max-width: 640px) { .nav-links { display: none; } }
 
-/* ─── LAYOUT HELPERS ──────────────────────────────────────────── */
 .page-wrap {
   max-width: 1120px;
   margin: 0 auto;
@@ -150,15 +141,12 @@ nav, section, footer, main { position: relative; z-index: 1; }
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0;
 }
-@media (max-width: 900px) {
-  .grid-2 { grid-template-columns: 1fr; }
-}
+@media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
 @media (max-width: 640px) {
   .grid-3 { grid-template-columns: 1fr; }
   .page-wrap { padding: 0 16px; }
 }
 
-/* ─── SECTION LABEL ───────────────────────────────────────────── */
 .sec-label {
   display: flex;
   align-items: center;
@@ -177,7 +165,6 @@ nav, section, footer, main { position: relative; z-index: 1; }
   background: var(--border-lo);
 }
 
-/* ─── CARD ────────────────────────────────────────────────────── */
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -186,7 +173,6 @@ nav, section, footer, main { position: relative; z-index: 1; }
   overflow: hidden;
 }
 
-/* ─── TEXTAREA ────────────────────────────────────────────────── */
 textarea {
   display: block;
   width: 100%;
@@ -209,7 +195,6 @@ textarea:focus {
 }
 textarea::placeholder { color: var(--t3); }
 
-/* ─── UPLOAD ZONE ─────────────────────────────────────────────── */
 .upload-zone {
   display: block;
   border: 1.5px dashed var(--border);
@@ -244,12 +229,6 @@ textarea::placeholder { color: var(--t3); }
   background: var(--em-d);
 }
 
-/* ─── ANALYZE BUTTON (Skiper-style slide) ─────────────────────── */
-/*
-  Two layers stacked: .btn-face (default) and .btn-loading.
-  On .loading: face slides down and out, loader slides in from top.
-  This is the signature Skiper interaction.
-*/
 .btn-analyze {
   position: relative;
   overflow: hidden;
@@ -290,7 +269,6 @@ textarea::placeholder { color: var(--t3); }
 .btn-analyze.is-loading .btn-face { transform: translateY(100%); opacity: 0; }
 .btn-analyze.is-loading .btn-load { transform: translateY(0); opacity: 1; }
 
-/* ─── SCORE RING ──────────────────────────────────────────────── */
 .ring-track { stroke: var(--border); }
 .ring-fill {
   stroke-dasharray: 283;
@@ -299,11 +277,9 @@ textarea::placeholder { color: var(--t3); }
   transition: stroke-dashoffset 1.4s cubic-bezier(.4,0,.2,1), stroke .6s ease, filter .6s ease;
 }
 
-/* ─── SPINNER ─────────────────────────────────────────────────── */
 @keyframes spin { to { transform: rotate(360deg); } }
 .spinning { animation: spin .7s linear infinite; }
 
-/* ─── SKILL TAGS ──────────────────────────────────────────────── */
 @keyframes tag-in {
   from { opacity: 0; transform: scale(.88) translateY(4px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
@@ -330,7 +306,6 @@ textarea::placeholder { color: var(--t3); }
   color: #fca5a5;
 }
 
-/* ─── RESULT PANEL ────────────────────────────────────────────── */
 @keyframes panel-in {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -340,7 +315,6 @@ textarea::placeholder { color: var(--t3); }
   animation: panel-in .35s ease forwards;
 }
 
-/* ─── FADE UP ─────────────────────────────────────────────────── */
 .fade-up {
   opacity: 0;
   transform: translateY(22px);
@@ -348,7 +322,6 @@ textarea::placeholder { color: var(--t3); }
 }
 .fade-up.in { opacity: 1; transform: none; }
 
-/* ─── HOW-IT-WORKS STRIP ──────────────────────────────────────── */
 .how-cell {
   background: var(--surface);
   padding: 20px 24px;
@@ -356,14 +329,10 @@ textarea::placeholder { color: var(--t3); }
 }
 .how-cell:last-child { border-right: none; }
 @media (max-width: 640px) {
-  .how-cell {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
+  .how-cell { border-right: none; border-bottom: 1px solid var(--border); }
   .how-cell:last-child { border-bottom: none; }
 }
 
-/* ─── CARD INNER LABEL ────────────────────────────────────────── */
 .card-lbl {
   display: flex;
   align-items: center;
@@ -381,31 +350,24 @@ textarea::placeholder { color: var(--t3); }
 
 <body>
 
-<!-- ═══════════════════════ NAV ════════════════════════════════ -->
+<!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
-
     <a href="/" class="logo">
       <span class="logo-dot"></span>
       ResumeIQ
     </a>
-
     <div class="nav-links">
       <a href="#app">Analyzer</a>
       <a href="#how">How it works</a>
     </div>
-
     <span class="badge-api">Groq · Fast</span>
-
   </div>
 </nav>
 
-
-<!-- ═══════════════════════ HERO ═══════════════════════════════ -->
+<!-- HERO -->
 <section style="padding: 116px 0 44px;" class="fade-up">
   <div class="page-wrap">
-
-    <!-- Tiny pill — not animated, just clean -->
     <div style="
       display: inline-flex; align-items: center; gap: 8px;
       background: var(--surface); border: 1px solid var(--border);
@@ -416,8 +378,6 @@ textarea::placeholder { color: var(--t3); }
         Resume · Job Description · Match Score
       </span>
     </div>
-
-    <!-- Headline — bold, provocative, human -->
     <h1 style="
       font-family: 'Geist', sans-serif;
       font-size: clamp(40px, 6.5vw, 76px);
@@ -433,13 +393,11 @@ textarea::placeholder { color: var(--t3); }
       you're getting<br/>
       <span style="color: var(--em);">overlooked.</span>
     </h1>
-
     <p style="color: var(--t2); font-size: 16px; max-width: 480px; line-height: 1.72; margin-bottom: 32px; font-weight: 300;">
       Upload your resume. Paste the job description.
       Get a precise match score, skill-gap breakdown, and
       AI coaching — powered by Groq.
     </p>
-
     <a href="#app" style="
       display: inline-flex; align-items: center; gap: 7px;
       background: var(--t1); color: #080808;
@@ -450,16 +408,12 @@ textarea::placeholder { color: var(--t3); }
       <span class="material-symbols-outlined" style="font-size:15px;">bolt</span>
       Run Analysis
     </a>
-
   </div>
 </section>
 
-
-<!-- ═══════════════════════ HOW IT WORKS ═══════════════════════ -->
+<!-- HOW IT WORKS -->
 <section id="how" style="padding: 0 0 44px;" class="fade-up">
   <div class="page-wrap">
-
-    <!-- Unified 3-cell strip — editorial, not 3 separate cards -->
     <div class="grid-3 card" style="overflow:hidden;">
       <div class="how-cell">
         <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--t3); letter-spacing:.1em;">01</span>
@@ -477,23 +431,17 @@ textarea::placeholder { color: var(--t3); }
         <p style="color:var(--t2); font-size:12px; margin-top:4px; font-weight:300;">Score, gaps, and coaching via Groq llama-3.3-70b.</p>
       </div>
     </div>
-
   </div>
 </section>
 
-
-<!-- ═══════════════════════ APP ════════════════════════════════ -->
+<!-- APP -->
 <section id="app" style="padding: 0 0 100px;" class="fade-up">
   <div class="page-wrap">
-
     <div class="sec-label">Resume Analyzer</div>
-
     <div class="grid-2">
 
-      <!-- ── LEFT: INPUTS ─────────────────────────────────────── -->
+      <!-- LEFT: INPUTS -->
       <div style="display:flex; flex-direction:column; gap:12px;">
-
-        <!-- Job Description card -->
         <div class="card" style="padding:20px;">
           <div class="card-lbl">
             <span class="lbl-dot" style="background:var(--em);box-shadow:0 0 5px var(--em-g);"></span>
@@ -502,298 +450,232 @@ textarea::placeholder { color: var(--t3); }
           <textarea id="jobDesc" rows="10" placeholder="Paste the full job description — responsibilities, requirements, preferred skills..."></textarea>
         </div>
 
-        <!-- Resume upload + CTA -->
         <div class="card" style="padding:20px;">
           <div class="card-lbl">
             <span class="lbl-dot" style="background:var(--t3);"></span>
             Your Resume
           </div>
-
           <label class="upload-zone" id="dropZone" for="resumeFile">
             <div class="upload-icon-wrap">
-              <span class="material-symbols-outlined" id="uploadIcon"
-                style="font-size:18px; color:var(--t2);">upload_file</span>
+              <span class="material-symbols-outlined" id="uploadIcon" style="font-size:18px; color:var(--t2);">upload_file</span>
             </div>
-            <p id="uploadText"
-              style="font-family:'Geist',sans-serif; font-weight:600; font-size:13px; color:var(--t1);">
+            <p id="uploadText" style="font-family:'Geist',sans-serif; font-weight:600; font-size:13px; color:var(--t1);">
               Drop PDF here or click to browse
             </p>
             <p style="font-size:11px; color:var(--t3); margin-top:4px; font-weight:300;">PDF · max 5MB</p>
           </label>
-          <input type="file" id="resumeFile" accept=".pdf" style="display:none;"
-            onchange="handleFile(this)"/>
-
-          <!-- Skiper-style slide button -->
+          <input type="file" id="resumeFile" accept=".pdf" style="display:none;" onchange="handleFile(this)"/>
           <button id="analyzeBtn" class="btn-analyze" onclick="analyze()">
             <div class="btn-face">
               <span class="material-symbols-outlined" style="font-size:15px;">bolt</span>
               Analyze My Resume
             </div>
             <div class="btn-load">
-              <svg class="spinning" width="13" height="13" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" stroke-width="2.5">
+              <svg class="spinning" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <circle cx="12" cy="12" r="10" stroke-opacity=".15"/>
                 <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/>
               </svg>
               Analyzing with Groq
             </div>
           </button>
-
         </div>
       </div>
 
-      <!-- ── RIGHT: RESULTS ────────────────────────────────────── -->
+      <!-- RIGHT: RESULTS -->
       <div id="resultsCol" style="display:flex; flex-direction:column; gap:12px;">
 
-        <!-- Empty state — ghost ring hints at what's coming -->
+        <!-- Empty state -->
         <div id="emptyState" class="card" style="
           padding: 56px 24px;
           display: flex; flex-direction:column;
           align-items:center; justify-content:center;
           min-height: 420px; text-align:center; gap:18px;
         ">
-          <!-- Ghost ring: a faint partial arc, pre-visualizing the score -->
           <svg width="100" height="100" viewBox="0 0 100 100" style="opacity:.1; transform:rotate(-90deg);">
-            <circle cx="50" cy="50" r="45" fill="none"
-              stroke="var(--t2)" stroke-width="4.5"
-              stroke-dasharray="283" stroke-dashoffset="90"
-              stroke-linecap="round"/>
+            <circle cx="50" cy="50" r="45" fill="none" stroke="var(--t2)" stroke-width="4.5" stroke-dasharray="283" stroke-dashoffset="90" stroke-linecap="round"/>
           </svg>
           <div>
-            <p style="font-family:'Geist',sans-serif; font-weight:600; font-size:15px; color:var(--t2); letter-spacing:-.01em;">
-              Waiting for analysis
-            </p>
-            <p style="font-size:12px; color:var(--t3); margin-top:6px; font-weight:300;">
-              Fill in both fields and click Analyze
-            </p>
+            <p style="font-family:'Geist',sans-serif; font-weight:600; font-size:15px; color:var(--t2); letter-spacing:-.01em;">Waiting for analysis</p>
+            <p style="font-size:12px; color:var(--t3); margin-top:6px; font-weight:300;">Fill in both fields and click Analyze</p>
           </div>
         </div>
 
-        <!-- Loader -->
+        <!-- Analyze loader -->
         <div id="loader" style="display:none;">
-          <div class="card" style="
-            padding: 56px 24px;
-            display:flex; flex-direction:column;
-            align-items:center; justify-content:center;
-            min-height: 420px; gap:18px; text-align:center;
-          ">
-            <svg class="spinning" width="26" height="26" viewBox="0 0 24 24"
-              fill="none" stroke="var(--em)" stroke-width="2">
+          <div class="card" style="padding: 56px 24px; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height: 420px; gap:18px; text-align:center;">
+            <svg class="spinning" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--em)" stroke-width="2">
               <circle cx="12" cy="12" r="10" stroke-opacity=".12"/>
               <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/>
             </svg>
             <div>
-              <p style="font-family:'JetBrains Mono',monospace; font-size:10px;
-                color:var(--t2); text-transform:uppercase; letter-spacing:.1em;">
-                Analyzing with Groq
-              </p>
-              <p style="font-size:11px; color:var(--t3); margin-top:6px; font-weight:300;">
-                Usually under 5 seconds
-              </p>
+              <p style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--t2); text-transform:uppercase; letter-spacing:.1em;">Analyzing with Groq</p>
+              <p style="font-size:11px; color:var(--t3); margin-top:6px; font-weight:300;">Usually under 5 seconds</p>
             </div>
           </div>
         </div>
 
-        <!-- ── SCORE CARD ── -->
+        <!-- SCORE CARD -->
         <div id="scoreCard" class="card result-panel" style="padding:28px;">
           <div style="display:flex; align-items:center; gap:24px;">
-
-            <!-- Ring — the ONE wow moment. Color-reactive + glow. -->
             <div style="position:relative; width:116px; height:116px; flex-shrink:0;">
-              <svg width="116" height="116" viewBox="0 0 100 100"
-                style="display:block; transform:rotate(-90deg);">
-                <circle class="ring-track" cx="50" cy="50" r="45"
-                  fill="none" stroke-width="5"/>
-                <circle id="ringFill" class="ring-fill" cx="50" cy="50" r="45"
-                  fill="none" stroke="#10b981" stroke-width="5"/>
+              <svg width="116" height="116" viewBox="0 0 100 100" style="display:block; transform:rotate(-90deg);">
+                <circle class="ring-track" cx="50" cy="50" r="45" fill="none" stroke-width="5"/>
+                <circle id="ringFill" class="ring-fill" cx="50" cy="50" r="45" fill="none" stroke="#10b981" stroke-width="5"/>
               </svg>
-              <div style="
-                position:absolute; inset:0;
-                display:flex; flex-direction:column;
-                align-items:center; justify-content:center;
-                gap:1px;
-              ">
-                <span id="scoreValue" style="
-                  font-family:'Geist',sans-serif;
-                  font-size:27px; font-weight:900;
-                  letter-spacing:-.04em; color:var(--t1);
-                ">0%</span>
-                <span style="
-                  font-family:'JetBrains Mono',monospace;
-                  font-size:9px; color:var(--t3);
-                  letter-spacing:.08em; text-transform:uppercase;
-                ">match</span>
+              <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px;">
+                <span id="scoreValue" style="font-family:'Geist',sans-serif; font-size:27px; font-weight:900; letter-spacing:-.04em; color:var(--t1);">0%</span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--t3); letter-spacing:.08em; text-transform:uppercase;">match</span>
               </div>
             </div>
-
-            <!-- Label + desc + bar -->
             <div style="flex:1; min-width:0;">
-              <p id="scoreLabel" style="
-                font-family:'Geist',sans-serif;
-                font-size:20px; font-weight:800;
-                letter-spacing:-.03em;
-                margin-bottom:6px; color:var(--t1);
-              ">Match Score</p>
-              <p id="scoreDesc" style="
-                font-size:13px; color:var(--t2);
-                line-height:1.65; font-weight:300;
-              "></p>
+              <p id="scoreLabel" style="font-family:'Geist',sans-serif; font-size:20px; font-weight:800; letter-spacing:-.03em; margin-bottom:6px; color:var(--t1);">Match Score</p>
+              <p id="scoreDesc" style="font-size:13px; color:var(--t2); line-height:1.65; font-weight:300;"></p>
               <div style="margin-top:14px; height:3px; background:var(--border); border-radius:99px; overflow:hidden;">
-                <div id="strengthFill" style="
-                  height:100%; border-radius:99px;
-                  background:var(--em);
-                  transition: width 1.4s cubic-bezier(.4,0,.2,1), background .6s;
-                  width:0%;
-                "></div>
+                <div id="strengthFill" style="height:100%; border-radius:99px; background:var(--em); transition: width 1.4s cubic-bezier(.4,0,.2,1), background .6s; width:0%;"></div>
               </div>
             </div>
-
           </div>
         </div>
 
-        <!-- ── SKILLS CARD — matched left, missing right ── -->
+        <!-- SKILLS CARD -->
         <div id="skillsCard" class="card result-panel" style="padding:20px;">
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-
-            <!-- Matched skills (green) -->
             <div>
               <div style="display:flex; align-items:center; gap:7px; margin-bottom:12px;">
-                <span style="font-family:'JetBrains Mono',monospace; font-size:10px;
-                  color:var(--t3); text-transform:uppercase; letter-spacing:.1em;">Matched</span>
-                <span id="matchedCount" style="
-                  font-family:'JetBrains Mono',monospace; font-size:10px;
-                  color:var(--em); background:var(--em-d);
-                  border:1px solid var(--em-b);
-                  padding:1px 7px; border-radius:99px;
-                ">0</span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--t3); text-transform:uppercase; letter-spacing:.1em;">Matched</span>
+                <span id="matchedCount" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--em); background:var(--em-d); border:1px solid var(--em-b); padding:1px 7px; border-radius:99px;">0</span>
               </div>
               <div id="matchedGrid" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
-              <p id="matchedNote" style="font-size:11px; color:var(--t3); font-weight:300; display:none;">
-                Backend update coming soon
-              </p>
+              <p id="matchedNote" style="font-size:11px; color:var(--t3); font-weight:300; display:none;">Backend update coming soon</p>
             </div>
-
-            <!-- Missing skills (red) -->
             <div>
               <div style="display:flex; align-items:center; gap:7px; margin-bottom:12px;">
-                <span style="font-family:'JetBrains Mono',monospace; font-size:10px;
-                  color:var(--t3); text-transform:uppercase; letter-spacing:.1em;">Missing</span>
-                <span id="missingCount" style="
-                  font-family:'JetBrains Mono',monospace; font-size:10px;
-                  color:#fca5a5; background:var(--red-d);
-                  border:1px solid var(--red-b);
-                  padding:1px 7px; border-radius:99px;
-                ">0</span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--t3); text-transform:uppercase; letter-spacing:.1em;">Missing</span>
+                <span id="missingCount" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#fca5a5; background:var(--red-d); border:1px solid var(--red-b); padding:1px 7px; border-radius:99px;">0</span>
               </div>
               <div id="skillsGrid" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
             </div>
-
           </div>
         </div>
 
-        <!-- ── RECOMMENDATIONS CARD ── -->
+        <!-- RECOMMENDATIONS CARD -->
         <div id="recsCard" class="card result-panel" style="padding:20px;">
           <div class="card-lbl">
-            <span class="material-symbols-outlined"
-              style="font-size:14px; color:var(--em);">lightbulb</span>
+            <span class="material-symbols-outlined" style="font-size:14px; color:var(--em);">lightbulb</span>
             AI Recommendations
           </div>
-          <p id="recText" style="
-            font-size:13.5px; color:var(--t2);
-            line-height:1.82; white-space:pre-wrap; font-weight:300;
-          "></p>
+          <p id="recText" style="font-size:13.5px; color:var(--t2); line-height:1.82; white-space:pre-wrap; font-weight:300;"></p>
         </div>
+
+        <!-- IMPROVE BUTTON -->
+        <div id="improveBtn" class="result-panel">
+          <button onclick="improve()" style="
+            width:100%; height:42px;
+            background: var(--em-d);
+            color: var(--em);
+            border: 1px solid var(--em-b);
+            border-radius: var(--r);
+            font-family: 'Geist', sans-serif;
+            font-weight: 700; font-size: 13.5px;
+            cursor: pointer;
+            transition: background .18s;
+          " onmouseover="this.style.background='var(--em-b)'" onmouseout="this.style.background='var(--em-d)'">
+            ✦ Improve My Resume with AI
+          </button>
+        </div>
+
+        <!-- IMPROVE RESULTS PANEL -->
+        <div id="improvePanel" style="display:none; flex-direction:column; gap:12px;">
+
+          <!-- Improve loader -->
+          <div id="improveLoader" class="card" style="padding:40px 24px; display:flex; flex-direction:column; align-items:center; gap:14px; text-align:center;">
+            <svg class="spinning" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--em)" stroke-width="2">
+              <circle cx="12" cy="12" r="10" stroke-opacity=".12"/>
+              <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/>
+            </svg>
+            <p style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--t2); text-transform:uppercase; letter-spacing:.1em;">Rewriting your resume</p>
+          </div>
+
+          <!-- Summary -->
+          <div id="improveSummary" class="card" style="display:none; padding:20px;">
+            <div class="card-lbl">
+              <span class="material-symbols-outlined" style="font-size:14px; color:var(--em);">auto_fix_high</span>
+              What Changed
+            </div>
+            <p id="summaryText" style="font-size:13.5px; color:var(--t2); line-height:1.82; font-weight:300;"></p>
+          </div>
+
+          <!-- Bullet rewrites -->
+          <div id="bulletCard" class="card" style="display:none; padding:20px;">
+            <div class="card-lbl">
+              <span class="material-symbols-outlined" style="font-size:14px; color:var(--em);">edit_note</span>
+              Bullet Rewrites
+            </div>
+            <div id="bulletList" style="display:flex; flex-direction:column; gap:14px;"></div>
+          </div>
+
+          <!-- Full improved resume -->
+          <div id="fullResumeCard" class="card" style="display:none; padding:20px;">
+            <div class="card-lbl">
+              <span class="material-symbols-outlined" style="font-size:14px; color:var(--em);">description</span>
+              Improved Resume
+            </div>
+            <pre id="fullResumeText" style="
+              font-family:'JetBrains Mono',monospace;
+              font-size:11.5px; color:var(--t2);
+              line-height:1.8; white-space:pre-wrap;
+              background:var(--raised); border:1px solid var(--border);
+              border-radius:var(--r); padding:16px;
+            "></pre>
+          </div>
+
+        </div>
+        <!-- end improvePanel -->
 
       </div>
       <!-- end results col -->
 
     </div>
-    <!-- end grid-2 -->
-
   </div>
 </section>
 
-
-<!-- ═══════════════════════ FOOTER ═════════════════════════════ -->
-<footer style="
-  border-top: 1px solid var(--border-lo);
-  padding: 22px 28px;
-  position: relative; z-index:1;
-">
-  <div style="
-    max-width:1120px; margin:0 auto;
-    display:flex; align-items:center; justify-content:space-between;
-    flex-wrap:wrap; gap:12px;
-  ">
+<!-- FOOTER -->
+<footer style="border-top: 1px solid var(--border-lo); padding: 22px 28px; position: relative; z-index:1;">
+  <div style="max-width:1120px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
     <div style="display:flex; align-items:center; gap:7px;">
       <span class="logo-dot"></span>
-      <span style="font-family:'Geist',sans-serif; font-weight:800;
-        font-size:13px; letter-spacing:-.03em; color:var(--t2);">ResumeIQ</span>
+      <span style="font-family:'Geist',sans-serif; font-weight:800; font-size:13px; letter-spacing:-.03em; color:var(--t2);">ResumeIQ</span>
     </div>
     <div style="display:flex; align-items:center; gap:16px; font-size:11.5px; color:var(--t3);">
       <span>© 2026</span>
       <span>Powered by <span style="color:var(--em);">Groq</span></span>
-      <a href="https://github.com/adrientdonf/ai-resume-analyzer"
-        style="color:var(--t3); text-decoration:none; transition:color .18s;"
-        onmouseover="this.style.color='var(--t1)'"
-        onmouseout="this.style.color='var(--t3)'">GitHub ↗</a>
+      <a href="https://github.com/adrientdonf/ai-resume-analyzer" style="color:var(--t3); text-decoration:none; transition:color .18s;" onmouseover="this.style.color='var(--t1)'" onmouseout="this.style.color='var(--t3)'">GitHub ↗</a>
     </div>
   </div>
 </footer>
 
-
-<!-- ═══════════════════════ SCRIPT ═════════════════════════════ -->
 <script>
-
-// ── Display name map ─────────────────────────────────────────────
-// Why: analyzer.py normalizes tech terms (scikit-learn → scikitlearn)
-// for keyword matching. We map them back to human-readable display names.
 const DISPLAY = {
-  scikitlearn: 'scikit-learn',
-  cicd:        'CI/CD',
-  nodejs:      'Node.js',
-  typescript:  'TypeScript',
-  javascript:  'JavaScript',
-  postgresql:  'PostgreSQL',
-  mongodb:     'MongoDB',
-  tensorflow:  'TensorFlow',
-  pytorch:     'PyTorch',
-  fastapi:     'FastAPI',
-  graphql:     'GraphQL',
-  devops:      'DevOps',
-  mlops:       'MLOps',
-  restapi:     'REST API',
-  numpy:       'NumPy',
-  pandas:      'Pandas',
-  reactjs:     'React',
-  vuejs:       'Vue.js',
-  nextjs:      'Next.js',
-  expressjs:   'Express.js',
+  scikitlearn: 'scikit-learn', cicd: 'CI/CD', nodejs: 'Node.js',
+  typescript: 'TypeScript', javascript: 'JavaScript', postgresql: 'PostgreSQL',
+  mongodb: 'MongoDB', tensorflow: 'TensorFlow', pytorch: 'PyTorch',
+  fastapi: 'FastAPI', graphql: 'GraphQL', devops: 'DevOps', mlops: 'MLOps',
+  restapi: 'REST API', numpy: 'NumPy', pandas: 'Pandas', reactjs: 'React',
+  vuejs: 'Vue.js', nextjs: 'Next.js', expressjs: 'Express.js',
 };
 const toDisplay = t => DISPLAY[t.toLowerCase()] || t;
 
-
-// ── Scroll fade-up ───────────────────────────────────────────────
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
 }, { threshold: 0.08 });
 document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
 
-
-// ── Drag & drop ──────────────────────────────────────────────────
 const dz = document.getElementById('dropZone');
-['dragenter','dragover'].forEach(ev =>
-  dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add('drag-on'); })
-);
-['dragleave','drop'].forEach(ev =>
-  dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.remove('drag-on'); })
-);
+['dragenter','dragover'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add('drag-on'); }));
+['dragleave','drop'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.remove('drag-on'); }));
 dz.addEventListener('drop', e => {
   const f = e.dataTransfer.files[0];
-  if (f && f.type === 'application/pdf') {
-    document.getElementById('resumeFile').files = e.dataTransfer.files;
-    setFile(f.name);
-  }
+  if (f && f.type === 'application/pdf') { document.getElementById('resumeFile').files = e.dataTransfer.files; setFile(f.name); }
 });
 
 function handleFile(input) { if (input.files[0]) setFile(input.files[0].name); }
@@ -805,10 +687,6 @@ function setFile(name) {
   document.getElementById('uploadText').textContent = name;
 }
 
-
-// ── Score helpers ─────────────────────────────────────────────────
-// Color-reactive: the ring changes color based on score tier.
-// This makes the result feel meaningful, not just a number.
 function scoreColor(p)  { return p >= 70 ? '#10b981' : p >= 40 ? '#f59e0b' : '#ef4444'; }
 function scoreLabel(p)  { return p >= 70 ? 'Strong Match' : p >= 50 ? 'Good Match' : p >= 30 ? 'Partial Match' : 'Major Gaps'; }
 function scoreDesc(p) {
@@ -819,21 +697,17 @@ function scoreDesc(p) {
 }
 
 function animateScore(target) {
-  const color  = scoreColor(target);
-  const ring   = document.getElementById('ringFill');
-  const bar    = document.getElementById('strengthFill');
-  const valEl  = document.getElementById('scoreValue');
-  const lblEl  = document.getElementById('scoreLabel');
-
-  // Animate number counter
+  const color = scoreColor(target);
+  const ring  = document.getElementById('ringFill');
+  const bar   = document.getElementById('strengthFill');
+  const valEl = document.getElementById('scoreValue');
+  const lblEl = document.getElementById('scoreLabel');
   let cur = 0;
   const iv = setInterval(() => {
     cur = Math.min(cur + target / 55, target);
     valEl.textContent = Math.round(cur) + '%';
     if (cur >= target) clearInterval(iv);
   }, 18);
-
-  // Animate ring fill + glow
   setTimeout(() => {
     ring.style.stroke           = color;
     ring.style.filter           = `drop-shadow(0 0 7px ${color}88)`;
@@ -844,30 +718,23 @@ function animateScore(target) {
   }, 60);
 }
 
-
-// ── Main analyze ──────────────────────────────────────────────────
 async function analyze() {
   const jobDesc = document.getElementById('jobDesc').value.trim();
   const file    = document.getElementById('resumeFile').files[0];
+  if (!jobDesc || !file) { alert('Please paste a job description and upload your resume.'); return; }
 
-  if (!jobDesc || !file) {
-    alert('Please paste a job description and upload your resume.');
-    return;
-  }
+  const btn    = document.getElementById('analyzeBtn');
+  const empty  = document.getElementById('emptyState');
+  const loader = document.getElementById('loader');
 
-  const btn     = document.getElementById('analyzeBtn');
-  const empty   = document.getElementById('emptyState');
-  const loader  = document.getElementById('loader');
-
-  // Enter loading state
   btn.disabled = true;
   btn.classList.add('is-loading');
   empty.style.display  = 'none';
   loader.style.display = 'block';
 
-  // Hide any previous results
-  ['scoreCard','skillsCard','recsCard'].forEach(id => {
-    document.getElementById(id).style.display = 'none';
+  ['scoreCard','skillsCard','recsCard','improveBtn','improvePanel'].forEach(id => {
+    const el = document.getElementById(id);
+    el.style.display = 'none';
   });
 
   const fd = new FormData();
@@ -879,19 +746,14 @@ async function analyze() {
     const data = await res.json();
     loader.style.display = 'none';
 
-    // ── Score card ────────────────────────────────────────
     const sc = document.getElementById('scoreCard');
     sc.style.display = 'block';
     animateScore(data.match_percent);
     document.getElementById('scoreLabel').textContent = scoreLabel(data.match_percent);
     document.getElementById('scoreDesc').textContent  = scoreDesc(data.match_percent);
 
-    // ── Skills card ───────────────────────────────────────
     setTimeout(() => {
-      const sk = document.getElementById('skillsCard');
-      sk.style.display = 'block';
-
-      // Missing skills
+      document.getElementById('skillsCard').style.display = 'block';
       const missing = (data.missing_skills || []).slice(0, 20);
       document.getElementById('missingCount').textContent = missing.length;
       const missingGrid = document.getElementById('skillsGrid');
@@ -903,9 +765,6 @@ async function analyze() {
         tag.textContent = toDisplay(s);
         missingGrid.appendChild(tag);
       });
-
-      // Matched skills — ready for when backend returns them
-      // Backend doesn't return these yet — we'll add that in the next commit
       const matched = (data.matched_skills || []).slice(0, 20);
       document.getElementById('matchedCount').textContent = matched.length;
       const matchedGrid = document.getElementById('matchedGrid');
@@ -923,11 +782,10 @@ async function analyze() {
       }
     }, 220);
 
-    // ── Recs card ─────────────────────────────────────────
     setTimeout(() => {
-      const rc = document.getElementById('recsCard');
-      rc.style.display = 'block';
+      document.getElementById('recsCard').style.display = 'block';
       document.getElementById('recText').textContent = data.recommendations;
+      document.getElementById('improveBtn').style.display = 'block';
     }, 440);
 
   } catch (err) {
@@ -940,6 +798,65 @@ async function analyze() {
   }
 }
 
+async function improve() {
+  const jobDesc = document.getElementById('jobDesc').value.trim();
+  const file    = document.getElementById('resumeFile').files[0];
+  if (!jobDesc || !file) { alert('Please run an analysis first.'); return; }
+
+  const panel  = document.getElementById('improvePanel');
+  const loader = document.getElementById('improveLoader');
+
+  panel.style.display  = 'flex';
+  loader.style.display = 'flex';
+  ['improveSummary','bulletCard','fullResumeCard'].forEach(id => {
+    document.getElementById(id).style.display = 'none';
+  });
+
+  const fd = new FormData();
+  fd.append('job_description', jobDesc);
+  fd.append('resume', file);
+
+  try {
+    const res  = await fetch('/improve', { method: 'POST', body: fd });
+    const data = await res.json();
+    loader.style.display = 'none';
+
+    const sum = document.getElementById('improveSummary');
+    sum.style.display = 'block';
+    document.getElementById('summaryText').textContent = data.summary;
+
+    const bc = document.getElementById('bulletCard');
+    bc.style.display = 'block';
+    const list = document.getElementById('bulletList');
+    list.innerHTML = '';
+    (data.bullet_analysis || []).forEach(b => {
+      const row = document.createElement('div');
+      row.style.cssText = `
+        display:grid; grid-template-columns:1fr 1fr; gap:12px;
+        padding:12px; border-radius:var(--r);
+        background:var(--raised); border:1px solid var(--border);
+      `;
+      row.innerHTML = `
+        <div>
+          <p style="font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--red); text-transform:uppercase; letter-spacing:.1em; margin-bottom:6px;">Original</p>
+          <p style="font-size:12px; color:var(--t2); line-height:1.65;">${b.original}</p>
+        </div>
+        <div>
+          <p style="font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--em); text-transform:uppercase; letter-spacing:.1em; margin-bottom:6px;">Improved</p>
+          <p style="font-size:12px; color:var(--t1); line-height:1.65;">${b.improved}</p>
+        </div>
+      `;
+      list.appendChild(row);
+    });
+
+    document.getElementById('fullResumeCard').style.display = 'block';
+    document.getElementById('fullResumeText').textContent = data.improved_resume;
+
+  } catch (err) {
+    loader.style.display = 'none';
+    alert('Something went wrong. Make sure the server is running.');
+  }
+}
 </script>
 </body>
 </html>
