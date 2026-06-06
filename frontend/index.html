@@ -64,6 +64,7 @@ body::before {
 
 nav, section, footer, main { position: relative; z-index: 1; }
 
+/* ─── NAV ─────────────────────────────────────────────────────── */
 .nav {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -126,6 +127,7 @@ nav, section, footer, main { position: relative; z-index: 1; }
 }
 @media (max-width: 640px) { .nav-links { display: none; } }
 
+/* ─── LAYOUT ──────────────────────────────────────────────────── */
 .page-wrap {
   max-width: 1120px;
   margin: 0 auto;
@@ -147,6 +149,7 @@ nav, section, footer, main { position: relative; z-index: 1; }
   .page-wrap { padding: 0 16px; }
 }
 
+/* ─── TYPOGRAPHY & LABELS ─────────────────────────────────────── */
 .sec-label {
   display: flex;
   align-items: center;
@@ -164,7 +167,20 @@ nav, section, footer, main { position: relative; z-index: 1; }
   height: 1px;
   background: var(--border-lo);
 }
+.card-lbl {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--t3);
+}
+.lbl-dot { width: 5px; height: 5px; border-radius: 50%; }
 
+/* ─── CARD ────────────────────────────────────────────────────── */
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -173,6 +189,7 @@ nav, section, footer, main { position: relative; z-index: 1; }
   overflow: hidden;
 }
 
+/* ─── TEXTAREA ────────────────────────────────────────────────── */
 textarea {
   display: block;
   width: 100%;
@@ -195,6 +212,7 @@ textarea:focus {
 }
 textarea::placeholder { color: var(--t3); }
 
+/* ─── UPLOAD ZONE ─────────────────────────────────────────────── */
 .upload-zone {
   display: block;
   border: 1.5px dashed var(--border);
@@ -229,6 +247,7 @@ textarea::placeholder { color: var(--t3); }
   background: var(--em-d);
 }
 
+/* ─── ANALYZE BUTTON ──────────────────────────────────────────── */
 .btn-analyze {
   position: relative;
   overflow: hidden;
@@ -269,6 +288,7 @@ textarea::placeholder { color: var(--t3); }
 .btn-analyze.is-loading .btn-face { transform: translateY(100%); opacity: 0; }
 .btn-analyze.is-loading .btn-load { transform: translateY(0); opacity: 1; }
 
+/* ─── SCORE RING ──────────────────────────────────────────────── */
 .ring-track { stroke: var(--border); }
 .ring-fill {
   stroke-dasharray: 283;
@@ -277,6 +297,7 @@ textarea::placeholder { color: var(--t3); }
   transition: stroke-dashoffset 1.4s cubic-bezier(.4,0,.2,1), stroke .6s ease, filter .6s ease;
 }
 
+/* ─── ANIMATIONS ──────────────────────────────────────────────── */
 @keyframes spin { to { transform: rotate(360deg); } }
 .spinning { animation: spin .7s linear infinite; }
 
@@ -284,6 +305,18 @@ textarea::placeholder { color: var(--t3); }
   from { opacity: 0; transform: scale(.88) translateY(4px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
+
+@keyframes panel-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ─── TAGS ────────────────────────────────────────────────────── */
 .tag {
   display: inline-flex;
   align-items: center;
@@ -306,15 +339,13 @@ textarea::placeholder { color: var(--t3); }
   color: #fca5a5;
 }
 
-@keyframes panel-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
+/* ─── RESULT PANELS ───────────────────────────────────────────── */
 .result-panel {
   display: none;
   animation: panel-in .35s ease forwards;
 }
 
+/* ─── FADE UP ─────────────────────────────────────────────────── */
 .fade-up {
   opacity: 0;
   transform: translateY(22px);
@@ -322,6 +353,7 @@ textarea::placeholder { color: var(--t3); }
 }
 .fade-up.in { opacity: 1; transform: none; }
 
+/* ─── HOW IT WORKS ────────────────────────────────────────────── */
 .how-cell {
   background: var(--surface);
   padding: 20px 24px;
@@ -333,18 +365,25 @@ textarea::placeholder { color: var(--t3); }
   .how-cell:last-child { border-bottom: none; }
 }
 
-.card-lbl {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  margin-bottom: 14px;
+/* ─── IMPROVE TABS ────────────────────────────────────────────── */
+.tab-btn {
+  flex: 1;
+  padding: 11px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--t2);
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
-  letter-spacing: .1em;
+  letter-spacing: .08em;
   text-transform: uppercase;
-  color: var(--t3);
+  cursor: pointer;
+  transition: color .18s, border-color .18s;
 }
-.lbl-dot { width: 5px; height: 5px; border-radius: 50%; }
+.tab-btn.active {
+  border-bottom-color: var(--em);
+  color: var(--em);
+}
 </style>
 </head>
 
@@ -567,7 +606,7 @@ textarea::placeholder { color: var(--t3); }
           <p id="recText" style="font-size:13.5px; color:var(--t2); line-height:1.82; white-space:pre-wrap; font-weight:300;"></p>
         </div>
 
-        <!-- IMPROVE BUTTON -->
+        <!-- IMPROVE TRIGGER BUTTON -->
         <div id="improveBtn" class="result-panel">
           <button onclick="improve()" style="
             width:100%; height:42px;
@@ -584,11 +623,12 @@ textarea::placeholder { color: var(--t3); }
           </button>
         </div>
 
-        <!-- IMPROVE RESULTS PANEL -->
-        <div id="improvePanel" style="display:none; flex-direction:column; gap:12px;">
+        <!-- ─── IMPROVE PANEL ─────────────────────────────────────── -->
+        <!-- Single panel, shown/hidden as a unit. No duplicate IDs.  -->
+        <div id="improvePanel" style="display:none; flex-direction:column; gap:0;">
 
-          <!-- Improve loader -->
-          <div id="improveLoader" class="card" style="padding:40px 24px; display:flex; flex-direction:column; align-items:center; gap:14px; text-align:center;">
+          <!-- Loader (shown while /improve is fetching) -->
+          <div id="improveLoader" class="card" style="display:none; padding:40px 24px; flex-direction:column; align-items:center; gap:14px; text-align:center;">
             <svg class="spinning" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--em)" stroke-width="2">
               <circle cx="12" cy="12" r="10" stroke-opacity=".12"/>
               <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/>
@@ -596,45 +636,81 @@ textarea::placeholder { color: var(--t3); }
             <p style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--t2); text-transform:uppercase; letter-spacing:.1em;">Rewriting your resume</p>
           </div>
 
-          <!-- Summary -->
-          <div id="improveSummary" class="card" style="display:none; padding:20px;">
-            <div class="card-lbl">
-              <span class="material-symbols-outlined" style="font-size:14px; color:var(--em);">auto_fix_high</span>
-              What Changed
-            </div>
-            <p id="summaryText" style="font-size:13.5px; color:var(--t2); line-height:1.82; font-weight:300;"></p>
-          </div>
+          <!-- Results (shown after /improve responds) -->
+          <div id="improveResults" style="display:none; flex-direction:column; gap:0; animation: panel-in .35s ease forwards;">
 
-          <!-- Bullet rewrites -->
-          <div id="bulletCard" class="card" style="display:none; padding:20px;">
-            <div class="card-lbl">
-              <span class="material-symbols-outlined" style="font-size:14px; color:var(--em);">edit_note</span>
-              Bullet Rewrites
+            <!-- Summary banner -->
+            <div style="
+              background: var(--em-d);
+              border: 1px solid var(--em-b);
+              border-radius: var(--r-lg) var(--r-lg) 0 0;
+              padding: 14px 20px;
+              border-bottom: none;
+            ">
+              <p id="summaryText" style="font-size:13px; color:#34d399; line-height:1.65; font-weight:400;"></p>
             </div>
-            <div id="bulletList" style="display:flex; flex-direction:column; gap:14px;"></div>
-          </div>
 
-          <!-- Full improved resume -->
-          <div id="fullResumeCard" class="card" style="display:none; padding:20px;">
-            <div class="card-lbl">
-              <span class="material-symbols-outlined" style="font-size:14px; color:var(--em);">description</span>
-              Improved Resume
+            <!-- Tab bar -->
+            <div style="
+              display: flex;
+              background: var(--surface);
+              border: 1px solid var(--em-b);
+              border-top: 1px solid var(--border);
+              border-bottom: none;
+            ">
+              <button id="tab-rewrites" class="tab-btn active" onclick="switchTab('rewrites')">Bullet Rewrites</button>
+              <button id="tab-resume"   class="tab-btn"        onclick="switchTab('resume')">Full Resume</button>
             </div>
-            <pre id="fullResumeText" style="
-              font-family:'JetBrains Mono',monospace;
-              font-size:11.5px; color:var(--t2);
-              line-height:1.8; white-space:pre-wrap;
-              background:var(--raised); border:1px solid var(--border);
-              border-radius:var(--r); padding:16px;
-            "></pre>
+
+            <!-- Rewrites tab content -->
+            <div id="panel-rewrites" style="
+              background: var(--surface);
+              border: 1px solid var(--em-b);
+              border-top: none;
+              border-radius: 0 0 var(--r-lg) var(--r-lg);
+              padding: 16px;
+            ">
+              <div id="bulletList" style="display:flex; flex-direction:column; gap:10px;"></div>
+            </div>
+
+            <!-- Full resume tab content -->
+            <div id="panel-resume" style="
+              display: none;
+              background: var(--surface);
+              border: 1px solid var(--em-b);
+              border-top: none;
+              border-radius: 0 0 var(--r-lg) var(--r-lg);
+              padding: 16px;
+            ">
+              <button onclick="downloadResume()" style="
+                width: 100%; height: 36px; margin-bottom: 14px;
+                background: var(--em); color: #080808;
+                border: none; border-radius: var(--r);
+                font-family: 'Geist', sans-serif; font-weight: 700; font-size: 13px;
+                cursor: pointer; transition: opacity .18s;
+                display: flex; align-items: center; justify-content: center; gap: 6px;
+              " onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+                <span class="material-symbols-outlined" style="font-size:15px;">download</span>
+                Download Improved Resume
+              </button>
+              <pre id="fullResumeText" style="
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px; color: var(--t2);
+                line-height: 1.85; white-space: pre-wrap;
+                background: var(--raised); border: 1px solid var(--border);
+                border-radius: var(--r); padding: 16px;
+                max-height: 400px; overflow-y: auto;
+              "></pre>
+            </div>
+
           </div>
+          <!-- end improveResults -->
 
         </div>
         <!-- end improvePanel -->
 
       </div>
-      <!-- end results col -->
-
+      <!-- end resultsCol -->
     </div>
   </div>
 </section>
@@ -655,6 +731,7 @@ textarea::placeholder { color: var(--t3); }
 </footer>
 
 <script>
+/* ─── DISPLAY NAME MAP ────────────────────────────────────────── */
 const DISPLAY = {
   scikitlearn: 'scikit-learn', cicd: 'CI/CD', nodejs: 'Node.js',
   typescript: 'TypeScript', javascript: 'JavaScript', postgresql: 'PostgreSQL',
@@ -665,11 +742,13 @@ const DISPLAY = {
 };
 const toDisplay = t => DISPLAY[t.toLowerCase()] || t;
 
+/* ─── SCROLL FADE-UP ──────────────────────────────────────────── */
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
 }, { threshold: 0.08 });
 document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
 
+/* ─── DRAG & DROP ─────────────────────────────────────────────── */
 const dz = document.getElementById('dropZone');
 ['dragenter','dragover'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add('drag-on'); }));
 ['dragleave','drop'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.remove('drag-on'); }));
@@ -678,6 +757,7 @@ dz.addEventListener('drop', e => {
   if (f && f.type === 'application/pdf') { document.getElementById('resumeFile').files = e.dataTransfer.files; setFile(f.name); }
 });
 
+/* ─── FILE HANDLING ───────────────────────────────────────────── */
 function handleFile(input) { if (input.files[0]) setFile(input.files[0].name); }
 function setFile(name) {
   dz.classList.add('has-file');
@@ -687,6 +767,7 @@ function setFile(name) {
   document.getElementById('uploadText').textContent = name;
 }
 
+/* ─── SCORE HELPERS ───────────────────────────────────────────── */
 function scoreColor(p)  { return p >= 70 ? '#10b981' : p >= 40 ? '#f59e0b' : '#ef4444'; }
 function scoreLabel(p)  { return p >= 70 ? 'Strong Match' : p >= 50 ? 'Good Match' : p >= 30 ? 'Partial Match' : 'Major Gaps'; }
 function scoreDesc(p) {
@@ -718,6 +799,7 @@ function animateScore(target) {
   }, 60);
 }
 
+/* ─── ANALYZE ─────────────────────────────────────────────────── */
 async function analyze() {
   const jobDesc = document.getElementById('jobDesc').value.trim();
   const file    = document.getElementById('resumeFile').files[0];
@@ -732,10 +814,14 @@ async function analyze() {
   empty.style.display  = 'none';
   loader.style.display = 'block';
 
-  ['scoreCard','skillsCard','recsCard','improveBtn','improvePanel'].forEach(id => {
-    const el = document.getElementById(id);
-    el.style.display = 'none';
+  // Hide all result panels and the improve panel
+  ['scoreCard','skillsCard','recsCard','improveBtn'].forEach(id => {
+    document.getElementById(id).style.display = 'none';
   });
+  // Reset improve panel fully
+  document.getElementById('improvePanel').style.display   = 'none';
+  document.getElementById('improveLoader').style.display  = 'none';
+  document.getElementById('improveResults').style.display = 'none';
 
   const fd = new FormData();
   fd.append('job_description', jobDesc);
@@ -746,14 +832,16 @@ async function analyze() {
     const data = await res.json();
     loader.style.display = 'none';
 
-    const sc = document.getElementById('scoreCard');
-    sc.style.display = 'block';
+    // Score card
+    document.getElementById('scoreCard').style.display = 'block';
     animateScore(data.match_percent);
     document.getElementById('scoreLabel').textContent = scoreLabel(data.match_percent);
     document.getElementById('scoreDesc').textContent  = scoreDesc(data.match_percent);
 
+    // Skills card
     setTimeout(() => {
       document.getElementById('skillsCard').style.display = 'block';
+
       const missing = (data.missing_skills || []).slice(0, 20);
       document.getElementById('missingCount').textContent = missing.length;
       const missingGrid = document.getElementById('skillsGrid');
@@ -765,6 +853,7 @@ async function analyze() {
         tag.textContent = toDisplay(s);
         missingGrid.appendChild(tag);
       });
+
       const matched = (data.matched_skills || []).slice(0, 20);
       document.getElementById('matchedCount').textContent = matched.length;
       const matchedGrid = document.getElementById('matchedGrid');
@@ -777,14 +866,16 @@ async function analyze() {
           tag.textContent = toDisplay(s);
           matchedGrid.appendChild(tag);
         });
+        document.getElementById('matchedNote').style.display = 'none';
       } else {
         document.getElementById('matchedNote').style.display = 'block';
       }
     }, 220);
 
+    // Recs + improve button
     setTimeout(() => {
-      document.getElementById('recsCard').style.display = 'block';
-      document.getElementById('recText').textContent = data.recommendations;
+      document.getElementById('recsCard').style.display  = 'block';
+      document.getElementById('recText').textContent     = data.recommendations;
       document.getElementById('improveBtn').style.display = 'block';
     }, 440);
 
@@ -798,19 +889,23 @@ async function analyze() {
   }
 }
 
+/* ─── IMPROVE ─────────────────────────────────────────────────── */
 async function improve() {
   const jobDesc = document.getElementById('jobDesc').value.trim();
   const file    = document.getElementById('resumeFile').files[0];
   if (!jobDesc || !file) { alert('Please run an analysis first.'); return; }
 
-  const panel  = document.getElementById('improvePanel');
-  const loader = document.getElementById('improveLoader');
+  const panel   = document.getElementById('improvePanel');
+  const loader  = document.getElementById('improveLoader');
+  const results = document.getElementById('improveResults');
 
-  panel.style.display  = 'flex';
-  loader.style.display = 'flex';
-  ['improveSummary','bulletCard','fullResumeCard'].forEach(id => {
-    document.getElementById(id).style.display = 'none';
-  });
+  // Show panel + loader, hide results
+  panel.style.display   = 'flex';
+  loader.style.display  = 'flex';
+  results.style.display = 'none';
+
+  // Scroll to panel
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
   const fd = new FormData();
   fd.append('job_description', jobDesc);
@@ -819,43 +914,83 @@ async function improve() {
   try {
     const res  = await fetch('/improve', { method: 'POST', body: fd });
     const data = await res.json();
+
     loader.style.display = 'none';
 
-    const sum = document.getElementById('improveSummary');
-    sum.style.display = 'block';
-    document.getElementById('summaryText').textContent = data.summary;
+    // Populate summary
+    document.getElementById('summaryText').textContent = data.summary || '';
 
-    const bc = document.getElementById('bulletCard');
-    bc.style.display = 'block';
+    // Populate bullet rewrites
     const list = document.getElementById('bulletList');
     list.innerHTML = '';
     (data.bullet_analysis || []).forEach(b => {
       const row = document.createElement('div');
       row.style.cssText = `
-        display:grid; grid-template-columns:1fr 1fr; gap:12px;
-        padding:12px; border-radius:var(--r);
-        background:var(--raised); border:1px solid var(--border);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        padding: 12px;
+        border-radius: var(--r);
+        background: var(--raised);
+        border: 1px solid var(--border);
       `;
       row.innerHTML = `
         <div>
           <p style="font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--red); text-transform:uppercase; letter-spacing:.1em; margin-bottom:6px;">Original</p>
-          <p style="font-size:12px; color:var(--t2); line-height:1.65;">${b.original}</p>
+          <p style="font-size:12px; color:var(--t2); line-height:1.65;">${escHtml(b.original)}</p>
         </div>
         <div>
           <p style="font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--em); text-transform:uppercase; letter-spacing:.1em; margin-bottom:6px;">Improved</p>
-          <p style="font-size:12px; color:var(--t1); line-height:1.65;">${b.improved}</p>
+          <p style="font-size:12px; color:var(--t1); line-height:1.65;">${escHtml(b.improved)}</p>
         </div>
       `;
       list.appendChild(row);
     });
 
-    document.getElementById('fullResumeCard').style.display = 'block';
-    document.getElementById('fullResumeText').textContent = data.improved_resume;
+    // Populate full resume text
+    document.getElementById('fullResumeText').textContent = data.improved_resume || '';
+
+    // Show results, default to rewrites tab
+    results.style.display = 'flex';
+    switchTab('rewrites');
 
   } catch (err) {
     loader.style.display = 'none';
-    alert('Something went wrong. Make sure the server is running.');
+    alert('Something went wrong. Make sure the server is running:\nuvicorn backend.main:app --reload');
   }
+}
+
+/* ─── TAB SWITCHER ────────────────────────────────────────────── */
+function switchTab(tab) {
+  const isRewrites = tab === 'rewrites';
+
+  document.getElementById('tab-rewrites').classList.toggle('active', isRewrites);
+  document.getElementById('tab-resume').classList.toggle('active', !isRewrites);
+
+  document.getElementById('panel-rewrites').style.display = isRewrites ? 'block' : 'none';
+  document.getElementById('panel-resume').style.display   = isRewrites ? 'none'  : 'block';
+}
+
+/* ─── DOWNLOAD ────────────────────────────────────────────────── */
+function downloadResume() {
+  const text = document.getElementById('fullResumeText').textContent;
+  if (!text) { alert('No improved resume to download yet.'); return; }
+  const blob = new Blob([text], { type: 'text/plain' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = 'improved_resume.txt';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+/* ─── UTILS ───────────────────────────────────────────────────── */
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }
 </script>
 </body>
