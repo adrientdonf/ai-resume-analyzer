@@ -8,31 +8,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 
 <style>
-/* ─── TOKENS ─────────────────────────────────────────────────── */
 :root {
-  --bg:        #040404;
-  --surface:   #0e0e0e;
-  --raised:    #161616;
-  --border:    #212121;
-  --border-lo: #161616;
-
-  --t1: #f0f0f0;
-  --t2: #686868;
-  --t3: #333333;
-
-  --em:   #10b981;
-  --em-d: rgba(16,185,129,.10);
-  --em-b: rgba(16,185,129,.20);
-  --em-g: rgba(16,185,129,.30);
-
+  --bg:        #f8f9fc;
+  --surface:   #ffffff;
+  --raised:    #f1f4f9;
+  --border:    #e2e7f0;
+  --border-lo: #edf0f7;
+  --t1: #0f1117;
+  --t2: #5a6380;
+  --t3: #a0abc0;
+  --em:   #3b82f6;
+  --em-d: rgba(59,130,246,.07);
+  --em-b: rgba(59,130,246,.18);
+  --em-g: rgba(59,130,246,.30);
   --red:   #ef4444;
-  --red-d: rgba(239,68,68,.10);
-  --red-b: rgba(239,68,68,.20);
-
+  --red-d: rgba(239,68,68,.07);
+  --red-b: rgba(239,68,68,.18);
   --amb:   #f59e0b;
-  --amb-d: rgba(245,158,11,.10);
-  --amb-b: rgba(245,158,11,.20);
-
   --r: 10px;
   --r-lg: 14px;
 }
@@ -56,248 +48,140 @@ body::before {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-image: radial-gradient(circle, #2a2a2a 1px, transparent 1px);
+  background-image: radial-gradient(circle, #c8d3e8 1px, transparent 1px);
   background-size: 26px 26px;
-  mask-image: radial-gradient(ellipse 110% 60% at 50% 0%, rgba(0,0,0,.55) 0%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 110% 60% at 50% 0%, rgba(0,0,0,.55) 0%, transparent 100%);
+  mask-image: radial-gradient(ellipse 110% 60% at 50% 0%, rgba(0,0,0,.4) 0%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 110% 60% at 50% 0%, rgba(0,0,0,.4) 0%, transparent 100%);
 }
 
 nav, section, footer, main { position: relative; z-index: 1; }
 
-/* ─── NAV ─────────────────────────────────────────────────────── */
+/* NAV */
 .nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  height: 54px;
-  display: flex;
-  align-items: center;
-  background: rgba(4,4,4,.82);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 54px; display: flex; align-items: center;
+  background: rgba(248,249,252,.88);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid var(--border-lo);
 }
 .nav-inner {
-  width: 100%;
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 0 28px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 28px;
+  display: flex; align-items: center; justify-content: space-between;
 }
 .logo {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  font-family: 'Geist', sans-serif;
-  font-weight: 800;
-  font-size: 16px;
-  letter-spacing: -0.04em;
-  color: var(--t1);
-  text-decoration: none;
+  display: flex; align-items: center; gap: 9px;
+  font-family: 'Geist', sans-serif; font-weight: 800; font-size: 16px;
+  letter-spacing: -0.04em; color: var(--t1); text-decoration: none;
 }
 .logo-dot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: var(--em);
-  box-shadow: 0 0 8px var(--em-g);
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--em); box-shadow: 0 0 8px var(--em-g);
 }
-.nav-links {
-  display: flex;
-  gap: 24px;
-  font-size: 13px;
-}
-.nav-links a {
-  color: var(--t2);
-  text-decoration: none;
-  transition: color .18s;
-}
+.nav-links { display: flex; gap: 24px; font-size: 13px; }
+.nav-links a { color: var(--t2); text-decoration: none; transition: color .18s; }
 .nav-links a:hover { color: var(--t1); }
 .badge-api {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: .07em;
-  text-transform: uppercase;
-  color: var(--em);
-  background: var(--em-d);
-  border: 1px solid var(--em-b);
-  padding: 4px 11px;
-  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: .07em; text-transform: uppercase;
+  color: var(--em); background: var(--em-d); border: 1px solid var(--em-b);
+  padding: 4px 11px; border-radius: 999px;
 }
 @media (max-width: 640px) { .nav-links { display: none; } }
 
-/* ─── LAYOUT ──────────────────────────────────────────────────── */
-.page-wrap {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 0 28px;
-}
+/* LAYOUT */
+.page-wrap { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+
 .grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
+  align-items: start;
 }
-.grid-3 {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 0;
-}
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; }
 @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
 @media (max-width: 640px) {
   .grid-3 { grid-template-columns: 1fr; }
   .page-wrap { padding: 0 16px; }
 }
 
-/* ─── TYPOGRAPHY & LABELS ─────────────────────────────────────── */
 .sec-label {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 18px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--t3);
+  display: flex; align-items: center; gap: 12px; margin-bottom: 18px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--t3);
 }
-.sec-label::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--border-lo);
+.sec-label::after { content: ''; flex: 1; height: 1px; background: var(--border-lo); }
+
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-lg); position: relative; overflow: hidden;
+  box-shadow: 0 1px 4px rgba(15,17,23,.04);
 }
 .card-lbl {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  margin-bottom: 14px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--t3);
+  display: flex; align-items: center; gap: 7px; margin-bottom: 14px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--t3);
 }
 .lbl-dot { width: 5px; height: 5px; border-radius: 50%; }
 
-/* ─── CARD ────────────────────────────────────────────────────── */
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  position: relative;
-  overflow: hidden;
-}
-
-/* ─── TEXTAREA ────────────────────────────────────────────────── */
 textarea {
-  display: block;
-  width: 100%;
-  background: var(--raised);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  color: var(--t1);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13.5px;
-  font-weight: 400;
-  line-height: 1.72;
-  padding: 14px 16px;
-  resize: vertical;
-  outline: none;
+  display: block; width: 100%; background: var(--raised);
+  border: 1px solid var(--border); border-radius: var(--r);
+  color: var(--t1); font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px; font-weight: 400; line-height: 1.72;
+  padding: 14px 16px; resize: vertical; outline: none;
   transition: border-color .2s, box-shadow .2s;
 }
-textarea:focus {
-  border-color: var(--border);
-  box-shadow: 0 0 0 3px rgba(16,185,129,.08);
-}
+textarea:focus { border-color: var(--em); box-shadow: 0 0 0 3px rgba(59,130,246,.10); }
 textarea::placeholder { color: var(--t3); }
 
-/* ─── UPLOAD ZONE ─────────────────────────────────────────────── */
 .upload-zone {
-  display: block;
-  border: 1.5px dashed var(--border);
-  border-radius: var(--r);
-  padding: 28px 20px;
-  text-align: center;
-  cursor: pointer;
-  transition: border-color .2s, background .2s;
-  background: transparent;
+  display: block; border: 1.5px dashed var(--border); border-radius: var(--r);
+  padding: 22px 20px; text-align: center; cursor: pointer;
+  transition: border-color .2s, background .2s; background: transparent;
 }
-.upload-zone:hover, .upload-zone.drag-on {
-  border-color: var(--em);
-  background: var(--em-d);
-}
+.upload-zone:hover, .upload-zone.drag-on { border-color: var(--em); background: var(--em-d); }
 .upload-zone.has-file {
-  border-style: solid;
-  border-color: rgba(16,185,129,.35);
-  background: rgba(16,185,129,.04);
+  border-style: solid; border-color: rgba(59,130,246,.35);
+  background: rgba(59,130,246,.04);
 }
 .upload-icon-wrap {
-  width: 40px; height: 40px;
-  background: var(--raised);
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 10px;
-  transition: border-color .2s, background .2s;
+  width: 36px; height: 36px; background: var(--raised); border: 1px solid var(--border);
+  border-radius: 9px; display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 8px; transition: border-color .2s, background .2s;
 }
-.upload-zone:hover .upload-icon-wrap,
-.upload-zone.drag-on .upload-icon-wrap {
-  border-color: var(--em-b);
-  background: var(--em-d);
+.upload-zone:hover .upload-icon-wrap, .upload-zone.drag-on .upload-icon-wrap {
+  border-color: var(--em-b); background: var(--em-d);
 }
 
-/* ─── ANALYZE BUTTON ──────────────────────────────────────────── */
 .btn-analyze {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  height: 42px;
-  margin-top: 12px;
-  background: var(--t1);
-  color: #080808;
-  border: none;
-  border-radius: var(--r);
-  font-family: 'Geist', sans-serif;
-  font-weight: 700;
-  font-size: 13.5px;
-  letter-spacing: -.01em;
-  cursor: pointer;
-  transition: background .18s, transform .1s;
+  position: relative; overflow: hidden; width: 100%; height: 42px; margin-top: 10px;
+  background: var(--em); color: #ffffff; border: none; border-radius: var(--r);
+  font-family: 'Geist', sans-serif; font-weight: 700; font-size: 13.5px;
+  letter-spacing: -.01em; cursor: pointer; transition: background .18s, transform .1s;
+  box-shadow: 0 2px 8px rgba(59,130,246,.25);
 }
-.btn-analyze:hover:not(:disabled) { background: #dcdcdc; }
+.btn-analyze:hover:not(:disabled) { background: #2563eb; }
 .btn-analyze:active:not(:disabled) { transform: scale(.99); }
-.btn-analyze:disabled { background: var(--raised); color: var(--t3); cursor: not-allowed; }
+.btn-analyze:disabled { background: var(--raised); color: var(--t3); cursor: not-allowed; box-shadow: none; }
 
 .btn-face, .btn-load {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
+  position: absolute; inset: 0; display: flex; align-items: center;
+  justify-content: center; gap: 7px;
   transition: transform .3s cubic-bezier(.4,0,.2,1), opacity .3s;
 }
 .btn-load {
-  background: var(--raised);
-  color: var(--t2);
-  font-weight: 500;
-  transform: translateY(-100%);
-  opacity: 0;
+  background: var(--raised); color: var(--t2); font-weight: 500;
+  transform: translateY(-100%); opacity: 0;
 }
 .btn-analyze.is-loading .btn-face { transform: translateY(100%); opacity: 0; }
 .btn-analyze.is-loading .btn-load { transform: translateY(0); opacity: 1; }
 
-/* ─── SCORE RING ──────────────────────────────────────────────── */
 .ring-track { stroke: var(--border); }
 .ring-fill {
-  stroke-dasharray: 283;
-  stroke-dashoffset: 283;
-  stroke-linecap: round;
+  stroke-dasharray: 283; stroke-dashoffset: 283; stroke-linecap: round;
   transition: stroke-dashoffset 1.4s cubic-bezier(.4,0,.2,1), stroke .6s ease, filter .6s ease;
 }
 
-/* ─── ANIMATIONS ──────────────────────────────────────────────── */
 @keyframes spin { to { transform: rotate(360deg); } }
 .spinning { animation: spin .7s linear infinite; }
 
@@ -305,58 +189,25 @@ textarea::placeholder { color: var(--t3); }
   from { opacity: 0; transform: scale(.88) translateY(4px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
+.tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+  padding: 4px 9px; border-radius: 6px;
+  animation: tag-in .22s forwards; opacity: 0;
+}
+.tag-ok { background: var(--em-d); border: 1px solid var(--em-b); color: #2563eb; }
+.tag-no { background: var(--red-d); border: 1px solid var(--red-b); color: #dc2626; }
 
 @keyframes panel-in {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-/* ─── TAGS ────────────────────────────────────────────────────── */
-.tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10.5px;
-  padding: 4px 9px;
-  border-radius: 6px;
-  animation: tag-in .22s forwards;
-  opacity: 0;
-}
-.tag-ok {
-  background: var(--em-d);
-  border: 1px solid var(--em-b);
-  color: #34d399;
-}
-.tag-no {
-  background: var(--red-d);
-  border: 1px solid var(--red-b);
-  color: #fca5a5;
-}
-
-/* ─── RESULT PANELS ───────────────────────────────────────────── */
-.result-panel {
-  display: none;
-  animation: panel-in .35s ease forwards;
-}
-
-/* ─── FADE UP ─────────────────────────────────────────────────── */
-.fade-up {
-  opacity: 0;
-  transform: translateY(22px);
-  transition: opacity .7s ease, transform .7s ease;
-}
+.fade-up { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
 .fade-up.in { opacity: 1; transform: none; }
 
-/* ─── HOW IT WORKS ────────────────────────────────────────────── */
 .how-cell {
-  background: var(--surface);
-  padding: 20px 24px;
+  background: var(--surface); padding: 20px 24px;
   border-right: 1px solid var(--border);
 }
 .how-cell:last-child { border-right: none; }
@@ -365,25 +216,54 @@ textarea::placeholder { color: var(--t3); }
   .how-cell:last-child { border-bottom: none; }
 }
 
-/* ─── IMPROVE TABS ────────────────────────────────────────────── */
-.tab-btn {
+/* ── RIGHT COLUMN: fixed-height, internally scrollable ── */
+#resultsCol {
+  position: sticky;
+  top: 68px;
+  height: calc(100vh - 88px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#resultsInner {
   flex: 1;
-  padding: 11px;
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  color: var(--t2);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: color .18s, border-color .18s;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
 }
-.tab-btn.active {
-  border-bottom-color: var(--em);
-  color: var(--em);
+#resultsInner::-webkit-scrollbar { width: 4px; }
+#resultsInner::-webkit-scrollbar-track { background: transparent; }
+#resultsInner::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+@media (max-width: 900px) {
+  #resultsCol { position: static; height: auto; overflow: visible; }
+  #resultsInner { overflow: visible; }
 }
+
+/* Tab buttons */
+.tab-btn {
+  flex: 1; padding: 10px;
+  background: none; border: none; border-bottom: 2px solid transparent;
+  color: var(--t2); font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: .08em; text-transform: uppercase;
+  cursor: pointer; transition: color .18s, border-color .18s;
+}
+.tab-btn.active { border-bottom-color: var(--em); color: var(--em); }
+
+/* Scrollable inner areas inside panels */
+.inner-scroll {
+  max-height: 340px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.inner-scroll::-webkit-scrollbar { width: 4px; }
+.inner-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
 </style>
 </head>
 
@@ -392,10 +272,7 @@ textarea::placeholder { color: var(--t3); }
 <!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
-    <a href="/" class="logo">
-      <span class="logo-dot"></span>
-      ResumeIQ
-    </a>
+    <a href="/" class="logo"><span class="logo-dot"></span>ResumeIQ</a>
     <div class="nav-links">
       <a href="#app">Analyzer</a>
       <a href="#how">How it works</a>
@@ -405,82 +282,63 @@ textarea::placeholder { color: var(--t3); }
 </nav>
 
 <!-- HERO -->
-<section style="padding: 116px 0 44px;" class="fade-up">
+<section style="padding: 124px 0 52px;" class="fade-up">
   <div class="page-wrap">
-    <div style="
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 999px; padding: 5px 14px; margin-bottom: 28px;
-    ">
-      <span class="logo-dot" style="width:5px;height:5px;flex-shrink:0;"></span>
-      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--t2); letter-spacing:.08em; text-transform:uppercase;">
-        Resume · Job Description · Match Score
-      </span>
+    <!-- pill badge -->
+    <div style="display:inline-flex;align-items:center;gap:8px;background:var(--em-d);border:1px solid var(--em-b);border-radius:999px;padding:5px 14px;margin-bottom:32px;">
+      <span style="width:5px;height:5px;border-radius:50%;background:var(--em);flex-shrink:0;"></span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--em);letter-spacing:.08em;text-transform:uppercase;">Resume · Job Description · Match Score</span>
     </div>
-    <h1 style="
-      font-family: 'Geist', sans-serif;
-      font-size: clamp(40px, 6.5vw, 76px);
-      font-weight: 900;
-      letter-spacing: -.05em;
-      line-height: .95;
-      color: var(--t1);
-      max-width: 720px;
-      margin-bottom: 22px;
-      text-wrap: balance;
-    ">
-      Know exactly why<br/>
-      you're getting<br/>
-      <span style="color: var(--em);">overlooked.</span>
+    <!-- headline -->
+    <h1 style="font-family:'Geist',sans-serif;font-size:clamp(38px,6.5vw,74px);font-weight:900;letter-spacing:-.05em;line-height:.95;max-width:720px;margin-bottom:24px;text-wrap:balance;background:linear-gradient(160deg,#0f1117 0%,#3a4260 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+      Know exactly why<br/>you're getting<br/><span style="-webkit-text-fill-color:var(--em);color:var(--em);text-decoration:underline;text-decoration-color:rgba(59,130,246,.25);text-underline-offset:6px;text-decoration-thickness:3px;">overlooked.</span>
     </h1>
-    <p style="color: var(--t2); font-size: 16px; max-width: 480px; line-height: 1.72; margin-bottom: 32px; font-weight: 300;">
-      Upload your resume. Paste the job description.
-      Get a precise match score, skill-gap breakdown, and
-      AI coaching — powered by Groq.
+    <!-- subtext -->
+    <p style="color:var(--t2);font-size:15.5px;max-width:460px;line-height:1.78;margin-bottom:36px;font-weight:400;letter-spacing:-.01em;">
+      Upload your resume. Paste the job description. Get a precise match score, skill-gap breakdown, and AI coaching — powered by Groq.
     </p>
-    <a href="#app" style="
-      display: inline-flex; align-items: center; gap: 7px;
-      background: var(--t1); color: #080808;
-      font-family: 'Geist', sans-serif; font-weight: 700; font-size: 14px;
-      padding: 11px 22px; border-radius: var(--r);
-      text-decoration: none; transition: background .18s;
-    " onmouseover="this.style.background='#d9d9d9'" onmouseout="this.style.background='var(--t1)'">
-      <span class="material-symbols-outlined" style="font-size:15px;">bolt</span>
-      Run Analysis
-    </a>
+    <!-- CTA row -->
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+      <a href="#app" style="display:inline-flex;align-items:center;gap:7px;background:var(--em);color:#fff;font-family:'Geist',sans-serif;font-weight:700;font-size:14px;padding:12px 24px;border-radius:var(--r);text-decoration:none;transition:background .18s,box-shadow .18s;box-shadow:0 4px 14px rgba(59,130,246,.32);" onmouseover="this.style.background='#2563eb';this.style.boxShadow='0 6px 20px rgba(59,130,246,.4)'" onmouseout="this.style.background='var(--em)';this.style.boxShadow='0 4px 14px rgba(59,130,246,.32)'">
+        <span class="material-symbols-outlined" style="font-size:15px;">bolt</span>
+        Run Analysis
+      </a>
+      <span style="font-size:12px;color:var(--t3);font-family:'JetBrains Mono',monospace;letter-spacing:.04em;">Free · No signup · Instant</span>
+    </div>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
-<section id="how" style="padding: 0 0 44px;" class="fade-up">
+<section id="how" style="padding:0 0 44px;" class="fade-up">
   <div class="page-wrap">
     <div class="grid-3 card" style="overflow:hidden;">
       <div class="how-cell">
-        <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--t3); letter-spacing:.1em;">01</span>
-        <p style="font-family:'Geist',sans-serif; font-weight:700; font-size:14px; color:var(--t1); margin-top:8px; letter-spacing:-.02em;">Upload Resume</p>
-        <p style="color:var(--t2); font-size:12px; margin-top:4px; font-weight:300;">PDF drag-and-drop. Text extracted and cleaned.</p>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3);letter-spacing:.1em;">01</span>
+        <p style="font-family:'Geist',sans-serif;font-weight:700;font-size:14px;color:var(--t1);margin-top:8px;letter-spacing:-.02em;">Upload Resume</p>
+        <p style="color:var(--t2);font-size:12px;margin-top:4px;font-weight:300;">PDF drag-and-drop. Text extracted and cleaned.</p>
       </div>
       <div class="how-cell">
-        <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--t3); letter-spacing:.1em;">02</span>
-        <p style="font-family:'Geist',sans-serif; font-weight:700; font-size:14px; color:var(--t1); margin-top:8px; letter-spacing:-.02em;">Paste Job Description</p>
-        <p style="color:var(--t2); font-size:12px; margin-top:4px; font-weight:300;">Any role, any industry. Every keyword cross-referenced.</p>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3);letter-spacing:.1em;">02</span>
+        <p style="font-family:'Geist',sans-serif;font-weight:700;font-size:14px;color:var(--t1);margin-top:8px;letter-spacing:-.02em;">Paste Job Description</p>
+        <p style="color:var(--t2);font-size:12px;margin-top:4px;font-weight:300;">Any role, any industry. Every keyword cross-referenced.</p>
       </div>
       <div class="how-cell">
-        <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--t3); letter-spacing:.1em;">03</span>
-        <p style="font-family:'Geist',sans-serif; font-weight:700; font-size:14px; color:var(--t1); margin-top:8px; letter-spacing:-.02em;">Get AI Insights</p>
-        <p style="color:var(--t2); font-size:12px; margin-top:4px; font-weight:300;">Score, gaps, and coaching via Groq llama-3.3-70b.</p>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3);letter-spacing:.1em;">03</span>
+        <p style="font-family:'Geist',sans-serif;font-weight:700;font-size:14px;color:var(--t1);margin-top:8px;letter-spacing:-.02em;">Get AI Insights</p>
+        <p style="color:var(--t2);font-size:12px;margin-top:4px;font-weight:300;">Score, gaps, and coaching via Groq llama-3.3-70b.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- APP -->
-<section id="app" style="padding: 0 0 100px;" class="fade-up">
+<section id="app" style="padding:0 0 100px;" class="fade-up">
   <div class="page-wrap">
     <div class="sec-label">Resume Analyzer</div>
     <div class="grid-2">
 
       <!-- LEFT: INPUTS -->
-      <div style="display:flex; flex-direction:column; gap:12px;">
+      <div style="display:flex;flex-direction:column;gap:12px;">
         <div class="card" style="padding:20px;">
           <div class="card-lbl">
             <span class="lbl-dot" style="background:var(--em);box-shadow:0 0 5px var(--em-g);"></span>
@@ -496,12 +354,10 @@ textarea::placeholder { color: var(--t3); }
           </div>
           <label class="upload-zone" id="dropZone" for="resumeFile">
             <div class="upload-icon-wrap">
-              <span class="material-symbols-outlined" id="uploadIcon" style="font-size:18px; color:var(--t2);">upload_file</span>
+              <span class="material-symbols-outlined" id="uploadIcon" style="font-size:18px;color:var(--t2);">upload_file</span>
             </div>
-            <p id="uploadText" style="font-family:'Geist',sans-serif; font-weight:600; font-size:13px; color:var(--t1);">
-              Drop PDF here or click to browse
-            </p>
-            <p style="font-size:11px; color:var(--t3); margin-top:4px; font-weight:300;">PDF · max 5MB</p>
+            <p id="uploadText" style="font-family:'Geist',sans-serif;font-weight:600;font-size:13px;color:var(--t1);">Drop PDF here or click to browse</p>
+            <p style="font-size:11px;color:var(--t3);margin-top:4px;font-weight:300;">PDF · max 5MB</p>
           </label>
           <input type="file" id="resumeFile" accept=".pdf" style="display:none;" onchange="handleFile(this)"/>
           <button id="analyzeBtn" class="btn-analyze" onclick="analyze()">
@@ -521,234 +377,184 @@ textarea::placeholder { color: var(--t3); }
       </div>
 
       <!-- RIGHT: RESULTS -->
-      <div id="resultsCol" style="display:flex; flex-direction:column; gap:12px;">
+      <div id="resultsCol">
+        <div id="resultsInner">
 
-        <!-- Empty state -->
-        <div id="emptyState" class="card" style="
-          padding: 56px 24px;
-          display: flex; flex-direction:column;
-          align-items:center; justify-content:center;
-          min-height: 420px; text-align:center; gap:18px;
-        ">
-          <svg width="100" height="100" viewBox="0 0 100 100" style="opacity:.1; transform:rotate(-90deg);">
-            <circle cx="50" cy="50" r="45" fill="none" stroke="var(--t2)" stroke-width="4.5" stroke-dasharray="283" stroke-dashoffset="90" stroke-linecap="round"/>
-          </svg>
-          <div>
-            <p style="font-family:'Geist',sans-serif; font-weight:600; font-size:15px; color:var(--t2); letter-spacing:-.01em;">Waiting for analysis</p>
-            <p style="font-size:12px; color:var(--t3); margin-top:6px; font-weight:300;">Fill in both fields and click Analyze</p>
-          </div>
-        </div>
-
-        <!-- Analyze loader -->
-        <div id="loader" style="display:none;">
-          <div class="card" style="padding: 56px 24px; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height: 420px; gap:18px; text-align:center;">
-            <svg class="spinning" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--em)" stroke-width="2">
-              <circle cx="12" cy="12" r="10" stroke-opacity=".12"/>
-              <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/>
+          <!-- Empty state -->
+          <div id="emptyState" class="card" style="padding:56px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:320px;text-align:center;gap:18px;">
+            <svg width="90" height="90" viewBox="0 0 100 100" style="opacity:.12;transform:rotate(-90deg);">
+              <circle cx="50" cy="50" r="45" fill="none" stroke="var(--t3)" stroke-width="4.5" stroke-dasharray="283" stroke-dashoffset="90" stroke-linecap="round"/>
             </svg>
             <div>
-              <p style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--t2); text-transform:uppercase; letter-spacing:.1em;">Analyzing with Groq</p>
-              <p style="font-size:11px; color:var(--t3); margin-top:6px; font-weight:300;">Usually under 5 seconds</p>
+              <p style="font-family:'Geist',sans-serif;font-weight:600;font-size:15px;color:var(--t2);letter-spacing:-.01em;">Waiting for analysis</p>
+              <p style="font-size:12px;color:var(--t3);margin-top:6px;font-weight:300;">Fill in both fields and click Analyze</p>
             </div>
           </div>
-        </div>
 
-        <!-- SCORE CARD -->
-        <div id="scoreCard" class="card result-panel" style="padding:28px;">
-          <div style="display:flex; align-items:center; gap:24px;">
-            <div style="position:relative; width:116px; height:116px; flex-shrink:0;">
-              <svg width="116" height="116" viewBox="0 0 100 100" style="display:block; transform:rotate(-90deg);">
-                <circle class="ring-track" cx="50" cy="50" r="45" fill="none" stroke-width="5"/>
-                <circle id="ringFill" class="ring-fill" cx="50" cy="50" r="45" fill="none" stroke="#10b981" stroke-width="5"/>
+          <!-- Analyze loader -->
+          <div id="loader" style="display:none;">
+            <div class="card" style="padding:56px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:320px;gap:18px;text-align:center;">
+              <svg class="spinning" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--em)" stroke-width="2">
+                <circle cx="12" cy="12" r="10" stroke-opacity=".12"/>
+                <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/>
               </svg>
-              <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px;">
-                <span id="scoreValue" style="font-family:'Geist',sans-serif; font-size:27px; font-weight:900; letter-spacing:-.04em; color:var(--t1);">0%</span>
-                <span style="font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--t3); letter-spacing:.08em; text-transform:uppercase;">match</span>
-              </div>
-            </div>
-            <div style="flex:1; min-width:0;">
-              <p id="scoreLabel" style="font-family:'Geist',sans-serif; font-size:20px; font-weight:800; letter-spacing:-.03em; margin-bottom:6px; color:var(--t1);">Match Score</p>
-              <p id="scoreDesc" style="font-size:13px; color:var(--t2); line-height:1.65; font-weight:300;"></p>
-              <div style="margin-top:14px; height:3px; background:var(--border); border-radius:99px; overflow:hidden;">
-                <div id="strengthFill" style="height:100%; border-radius:99px; background:var(--em); transition: width 1.4s cubic-bezier(.4,0,.2,1), background .6s; width:0%;"></div>
+              <div>
+                <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t2);text-transform:uppercase;letter-spacing:.1em;">Analyzing with Groq</p>
+                <p style="font-size:11px;color:var(--t3);margin-top:6px;font-weight:300;">Usually under 5 seconds</p>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- SKILLS CARD -->
-        <div id="skillsCard" class="card result-panel" style="padding:20px;">
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-            <div>
-              <div style="display:flex; align-items:center; gap:7px; margin-bottom:12px;">
-                <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--t3); text-transform:uppercase; letter-spacing:.1em;">Matched</span>
-                <span id="matchedCount" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--em); background:var(--em-d); border:1px solid var(--em-b); padding:1px 7px; border-radius:99px;">0</span>
+          <!-- VIEW A: ANALYZE RESULTS -->
+          <div id="analyzeResults" style="display:none;flex-direction:column;gap:10px;animation:panel-in .3s ease forwards;">
+
+            <!-- Score -->
+            <div class="card" style="padding:22px;">
+              <div style="display:flex;align-items:center;gap:20px;">
+                <div style="position:relative;width:100px;height:100px;flex-shrink:0;">
+                  <svg width="100" height="100" viewBox="0 0 100 100" style="display:block;transform:rotate(-90deg);">
+                    <circle class="ring-track" cx="50" cy="50" r="45" fill="none" stroke-width="5"/>
+                    <circle id="ringFill" class="ring-fill" cx="50" cy="50" r="45" fill="none" stroke="#3b82f6" stroke-width="5"/>
+                  </svg>
+                  <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;">
+                    <span id="scoreValue" style="font-family:'Geist',sans-serif;font-size:24px;font-weight:900;letter-spacing:-.04em;color:var(--t1);">0%</span>
+                    <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3);letter-spacing:.08em;text-transform:uppercase;">match</span>
+                  </div>
+                </div>
+                <div style="flex:1;min-width:0;">
+                  <p id="scoreLabel" style="font-family:'Geist',sans-serif;font-size:18px;font-weight:800;letter-spacing:-.03em;margin-bottom:5px;color:var(--t1);">—</p>
+                  <p id="scoreDesc" style="font-size:12.5px;color:var(--t2);line-height:1.6;font-weight:300;"></p>
+                  <div style="margin-top:12px;height:3px;background:var(--border);border-radius:99px;overflow:hidden;">
+                    <div id="strengthFill" style="height:100%;border-radius:99px;background:var(--em);transition:width 1.4s cubic-bezier(.4,0,.2,1),background .6s;width:0%;"></div>
+                  </div>
+                </div>
               </div>
-              <div id="matchedGrid" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
-              <p id="matchedNote" style="font-size:11px; color:var(--t3); font-weight:300; display:none;">Backend update coming soon</p>
             </div>
-            <div>
-              <div style="display:flex; align-items:center; gap:7px; margin-bottom:12px;">
-                <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--t3); text-transform:uppercase; letter-spacing:.1em;">Missing</span>
-                <span id="missingCount" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#fca5a5; background:var(--red-d); border:1px solid var(--red-b); padding:1px 7px; border-radius:99px;">0</span>
+
+            <!-- Skills -->
+            <div class="card" style="padding:18px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                <div>
+                  <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px;">
+                    <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.1em;">Matched</span>
+                    <span id="matchedCount" style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--em);background:var(--em-d);border:1px solid var(--em-b);padding:1px 7px;border-radius:99px;">0</span>
+                  </div>
+                  <div id="matchedGrid" style="display:flex;flex-wrap:wrap;gap:5px;"></div>
+                  <p id="matchedNote" style="font-size:11px;color:var(--t3);font-weight:300;display:none;">No matched skills found</p>
+                </div>
+                <div>
+                  <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px;">
+                    <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.1em;">Missing</span>
+                    <span id="missingCount" style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#dc2626;background:var(--red-d);border:1px solid var(--red-b);padding:1px 7px;border-radius:99px;">0</span>
+                  </div>
+                  <div id="skillsGrid" style="display:flex;flex-wrap:wrap;gap:5px;"></div>
+                </div>
               </div>
-              <div id="skillsGrid" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
             </div>
-          </div>
-        </div>
 
-        <!-- RECOMMENDATIONS CARD -->
-        <div id="recsCard" class="card result-panel" style="padding:20px;">
-          <div class="card-lbl">
-            <span class="material-symbols-outlined" style="font-size:14px; color:var(--em);">lightbulb</span>
-            AI Recommendations
-          </div>
-          <p id="recText" style="font-size:13.5px; color:var(--t2); line-height:1.82; white-space:pre-wrap; font-weight:300;"></p>
-        </div>
+            <!-- Recommendations -->
+            <div class="card" style="padding:18px;">
+              <div class="card-lbl">
+                <span class="material-symbols-outlined" style="font-size:14px;color:var(--em);">lightbulb</span>
+                AI Recommendations
+              </div>
+              <p id="recText" style="font-size:13px;color:var(--t2);line-height:1.8;white-space:pre-wrap;font-weight:300;"></p>
+            </div>
 
-        <!-- IMPROVE TRIGGER BUTTON -->
-        <div id="improveBtn" class="result-panel">
-          <button onclick="improve()" style="
-            width:100%; height:42px;
-            background: var(--em-d);
-            color: var(--em);
-            border: 1px solid var(--em-b);
-            border-radius: var(--r);
-            font-family: 'Geist', sans-serif;
-            font-weight: 700; font-size: 13.5px;
-            cursor: pointer;
-            transition: background .18s;
-          " onmouseover="this.style.background='var(--em-b)'" onmouseout="this.style.background='var(--em-d)'">
-            ✦ Improve My Resume with AI
-          </button>
-        </div>
+            <!-- Improve trigger -->
+            <button onclick="showImprove()" style="width:100%;height:42px;background:var(--em-d);color:var(--em);border:1px solid var(--em-b);border-radius:var(--r);font-family:'Geist',sans-serif;font-weight:700;font-size:13.5px;cursor:pointer;transition:background .18s;" onmouseover="this.style.background='var(--em-b)'" onmouseout="this.style.background='var(--em-d)'">
+              ✦ Improve My Resume with AI
+            </button>
 
-        <!-- ─── IMPROVE PANEL ─────────────────────────────────────── -->
-        <!-- Single panel, shown/hidden as a unit. No duplicate IDs.  -->
-        <div id="improvePanel" style="display:none; flex-direction:column; gap:0;">
-
-          <!-- Loader (shown while /improve is fetching) -->
-          <div id="improveLoader" class="card" style="display:none; padding:40px 24px; flex-direction:column; align-items:center; gap:14px; text-align:center;">
-            <svg class="spinning" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--em)" stroke-width="2">
-              <circle cx="12" cy="12" r="10" stroke-opacity=".12"/>
-              <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/>
-            </svg>
-            <p style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--t2); text-transform:uppercase; letter-spacing:.1em;">Rewriting your resume</p>
           </div>
 
-          <!-- Results (shown after /improve responds) -->
-          <div id="improveResults" style="display:none; flex-direction:column; gap:0; animation: panel-in .35s ease forwards;">
+          <!-- VIEW B: IMPROVE RESULTS -->
+          <div id="improveView" style="display:none;flex-direction:column;gap:0;animation:panel-in .3s ease forwards;">
 
-            <!-- Summary banner -->
-            <div style="
-              background: var(--em-d);
-              border: 1px solid var(--em-b);
-              border-radius: var(--r-lg) var(--r-lg) 0 0;
-              padding: 14px 20px;
-              border-bottom: none;
-            ">
-              <p id="summaryText" style="font-size:13px; color:#34d399; line-height:1.65; font-weight:400;"></p>
+            <!-- Back button -->
+            <button onclick="showAnalyze()" style="display:flex;align-items:center;gap:6px;background:none;border:none;color:var(--t2);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;padding:0 0 12px 0;transition:color .18s;" onmouseover="this.style.color='var(--t1)'" onmouseout="this.style.color='var(--t2)'">
+              <span class="material-symbols-outlined" style="font-size:14px;">arrow_back</span>
+              Back to results
+            </button>
+
+            <!-- Improve loader -->
+            <div id="improveLoader" class="card" style="display:none;padding:40px 24px;flex-direction:column;align-items:center;gap:14px;text-align:center;">
+              <svg class="spinning" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--em)" stroke-width="2">
+                <circle cx="12" cy="12" r="10" stroke-opacity=".12"/>
+                <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/>
+              </svg>
+              <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t2);text-transform:uppercase;letter-spacing:.1em;">Rewriting your resume</p>
             </div>
 
-            <!-- Tab bar -->
-            <div style="
-              display: flex;
-              background: var(--surface);
-              border: 1px solid var(--em-b);
-              border-top: 1px solid var(--border);
-              border-bottom: none;
-            ">
-              <button id="tab-rewrites" class="tab-btn active" onclick="switchTab('rewrites')">Bullet Rewrites</button>
-              <button id="tab-resume"   class="tab-btn"        onclick="switchTab('resume')">Full Resume</button>
-            </div>
+            <!-- Improve results -->
+            <div id="improveResults" style="display:none;flex-direction:column;gap:0;">
 
-            <!-- Rewrites tab content -->
-            <div id="panel-rewrites" style="
-              background: var(--surface);
-              border: 1px solid var(--em-b);
-              border-top: none;
-              border-radius: 0 0 var(--r-lg) var(--r-lg);
-              padding: 16px;
-            ">
-              <div id="bulletList" style="display:flex; flex-direction:column; gap:10px;"></div>
-            </div>
+              <!-- Summary banner -->
+              <div style="background:var(--em-d);border:1px solid var(--em-b);border-radius:var(--r-lg) var(--r-lg) 0 0;padding:12px 18px;border-bottom:none;">
+                <p id="summaryText" style="font-size:12.5px;color:#2563eb;line-height:1.65;font-weight:400;"></p>
+              </div>
 
-            <!-- Full resume tab content -->
-            <div id="panel-resume" style="
-              display: none;
-              background: var(--surface);
-              border: 1px solid var(--em-b);
-              border-top: none;
-              border-radius: 0 0 var(--r-lg) var(--r-lg);
-              padding: 16px;
-            ">
-              <button onclick="downloadResume()" style="
-                width: 100%; height: 36px; margin-bottom: 14px;
-                background: var(--em); color: #080808;
-                border: none; border-radius: var(--r);
-                font-family: 'Geist', sans-serif; font-weight: 700; font-size: 13px;
-                cursor: pointer; transition: opacity .18s;
-                display: flex; align-items: center; justify-content: center; gap: 6px;
-              " onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
-                <span class="material-symbols-outlined" style="font-size:15px;">download</span>
-                Download Improved Resume
-              </button>
-              <pre id="fullResumeText" style="
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 11px; color: var(--t2);
-                line-height: 1.85; white-space: pre-wrap;
-                background: var(--raised); border: 1px solid var(--border);
-                border-radius: var(--r); padding: 16px;
-                max-height: 400px; overflow-y: auto;
-              "></pre>
+              <!-- Tab bar -->
+              <div style="display:flex;background:var(--surface);border:1px solid var(--em-b);border-top:1px solid var(--border);border-bottom:none;">
+                <button id="tab-rewrites" class="tab-btn active" onclick="switchTab('rewrites')">Bullet Rewrites</button>
+                <button id="tab-resume"   class="tab-btn"        onclick="switchTab('resume')">Full Resume</button>
+              </div>
+
+              <!-- Rewrites tab -->
+              <div id="panel-rewrites" style="background:var(--surface);border:1px solid var(--em-b);border-top:none;border-radius:0 0 var(--r-lg) var(--r-lg);padding:14px;">
+                <div id="bulletList" class="inner-scroll" style="display:flex;flex-direction:column;gap:8px;"></div>
+              </div>
+
+              <!-- Full resume tab -->
+              <div id="panel-resume" style="display:none;background:var(--surface);border:1px solid var(--em-b);border-top:none;border-radius:0 0 var(--r-lg) var(--r-lg);padding:14px;">
+                <button onclick="downloadResume()" style="width:100%;height:36px;margin-bottom:12px;background:var(--em);color:#fff;border:none;border-radius:var(--r);font-family:'Geist',sans-serif;font-weight:700;font-size:13px;cursor:pointer;transition:opacity .18s;display:flex;align-items:center;justify-content:center;gap:6px;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+                  <span class="material-symbols-outlined" style="font-size:15px;">download</span>
+                  Download Improved Resume
+                </button>
+                <pre id="fullResumeText" class="inner-scroll" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t2);line-height:1.85;white-space:pre-wrap;background:var(--raised);border:1px solid var(--border);border-radius:var(--r);padding:14px;"></pre>
+              </div>
+
             </div>
 
           </div>
-          <!-- end improveResults -->
 
         </div>
-        <!-- end improvePanel -->
-
       </div>
-      <!-- end resultsCol -->
+
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
-<footer style="border-top: 1px solid var(--border-lo); padding: 22px 28px; position: relative; z-index:1;">
-  <div style="max-width:1120px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
-    <div style="display:flex; align-items:center; gap:7px;">
+<footer style="border-top:1px solid var(--border-lo);padding:22px 28px;position:relative;z-index:1;">
+  <div style="max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+    <div style="display:flex;align-items:center;gap:7px;">
       <span class="logo-dot"></span>
-      <span style="font-family:'Geist',sans-serif; font-weight:800; font-size:13px; letter-spacing:-.03em; color:var(--t2);">ResumeIQ</span>
+      <span style="font-family:'Geist',sans-serif;font-weight:800;font-size:13px;letter-spacing:-.03em;color:var(--t2);">ResumeIQ</span>
     </div>
-    <div style="display:flex; align-items:center; gap:16px; font-size:11.5px; color:var(--t3);">
+    <div style="display:flex;align-items:center;gap:16px;font-size:11.5px;color:var(--t3);">
       <span>© 2026</span>
       <span>Powered by <span style="color:var(--em);">Groq</span></span>
-      <a href="https://github.com/adrientdonf/ai-resume-analyzer" style="color:var(--t3); text-decoration:none; transition:color .18s;" onmouseover="this.style.color='var(--t1)'" onmouseout="this.style.color='var(--t3)'">GitHub ↗</a>
+      <a href="https://github.com/adrientdonf/ai-resume-analyzer" style="color:var(--t3);text-decoration:none;transition:color .18s;" onmouseover="this.style.color='var(--t1)'" onmouseout="this.style.color='var(--t3)'">GitHub ↗</a>
     </div>
   </div>
 </footer>
 
 <script>
-/* ─── DISPLAY NAME MAP ────────────────────────────────────────── */
 const DISPLAY = {
-  scikitlearn: 'scikit-learn', cicd: 'CI/CD', nodejs: 'Node.js',
-  typescript: 'TypeScript', javascript: 'JavaScript', postgresql: 'PostgreSQL',
-  mongodb: 'MongoDB', tensorflow: 'TensorFlow', pytorch: 'PyTorch',
-  fastapi: 'FastAPI', graphql: 'GraphQL', devops: 'DevOps', mlops: 'MLOps',
-  restapi: 'REST API', numpy: 'NumPy', pandas: 'Pandas', reactjs: 'React',
-  vuejs: 'Vue.js', nextjs: 'Next.js', expressjs: 'Express.js',
+  scikitlearn:'scikit-learn',cicd:'CI/CD',nodejs:'Node.js',typescript:'TypeScript',
+  javascript:'JavaScript',postgresql:'PostgreSQL',mongodb:'MongoDB',tensorflow:'TensorFlow',
+  pytorch:'PyTorch',fastapi:'FastAPI',graphql:'GraphQL',devops:'DevOps',mlops:'MLOps',
+  restapi:'REST API',numpy:'NumPy',pandas:'Pandas',reactjs:'React',
+  vuejs:'Vue.js',nextjs:'Next.js',expressjs:'Express.js',
 };
 const toDisplay = t => DISPLAY[t.toLowerCase()] || t;
 
-/* ─── SCROLL FADE-UP ──────────────────────────────────────────── */
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
 }, { threshold: 0.08 });
 document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
 
-/* ─── DRAG & DROP ─────────────────────────────────────────────── */
 const dz = document.getElementById('dropZone');
 ['dragenter','dragover'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add('drag-on'); }));
 ['dragleave','drop'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.remove('drag-on'); }));
@@ -757,24 +563,21 @@ dz.addEventListener('drop', e => {
   if (f && f.type === 'application/pdf') { document.getElementById('resumeFile').files = e.dataTransfer.files; setFile(f.name); }
 });
 
-/* ─── FILE HANDLING ───────────────────────────────────────────── */
 function handleFile(input) { if (input.files[0]) setFile(input.files[0].name); }
 function setFile(name) {
   dz.classList.add('has-file');
   const icon = document.getElementById('uploadIcon');
-  icon.textContent = 'check_circle';
-  icon.style.color = 'var(--em)';
+  icon.textContent = 'check_circle'; icon.style.color = 'var(--em)';
   document.getElementById('uploadText').textContent = name;
 }
 
-/* ─── SCORE HELPERS ───────────────────────────────────────────── */
-function scoreColor(p)  { return p >= 70 ? '#10b981' : p >= 40 ? '#f59e0b' : '#ef4444'; }
-function scoreLabel(p)  { return p >= 70 ? 'Strong Match' : p >= 50 ? 'Good Match' : p >= 30 ? 'Partial Match' : 'Major Gaps'; }
+function scoreColor(p) { return p >= 70 ? '#3b82f6' : p >= 40 ? '#f59e0b' : '#ef4444'; }
+function scoreLabel(p) { return p >= 70 ? 'Strong Match' : p >= 50 ? 'Good Match' : p >= 30 ? 'Partial Match' : 'Major Gaps'; }
 function scoreDesc(p) {
-  if (p >= 70) return "Your profile aligns strongly with this role. A few targeted additions could push you over 80%.";
-  if (p >= 50) return "Solid foundation. Address the missing skills below to strengthen your application.";
-  if (p >= 30) return "There's a meaningful gap. Use the AI recommendations to tailor your resume for this role.";
-  return "Significant skill gaps detected. Review the missing skills and recommendations carefully before applying.";
+  if (p >= 70) return "Strong alignment. A few targeted additions could push you over 80%.";
+  if (p >= 50) return "Solid foundation. Address the missing skills to strengthen your application.";
+  if (p >= 30) return "Meaningful gap. Use the recommendations to tailor your resume for this role.";
+  return "Significant skill gaps detected. Review missing skills and recommendations carefully.";
 }
 
 function animateScore(target) {
@@ -784,44 +587,47 @@ function animateScore(target) {
   const valEl = document.getElementById('scoreValue');
   const lblEl = document.getElementById('scoreLabel');
   let cur = 0;
-  const iv = setInterval(() => {
-    cur = Math.min(cur + target / 55, target);
-    valEl.textContent = Math.round(cur) + '%';
-    if (cur >= target) clearInterval(iv);
-  }, 18);
+  const iv = setInterval(() => { cur = Math.min(cur + target / 55, target); valEl.textContent = Math.round(cur) + '%'; if (cur >= target) clearInterval(iv); }, 18);
   setTimeout(() => {
-    ring.style.stroke           = color;
-    ring.style.filter           = `drop-shadow(0 0 7px ${color}88)`;
+    ring.style.stroke = color;
+    ring.style.filter = `drop-shadow(0 0 7px ${color}88)`;
     ring.style.strokeDashoffset = 283 - (target / 100) * 283;
-    bar.style.background        = color;
-    bar.style.width             = target + '%';
-    lblEl.style.color           = color;
+    bar.style.background = color; bar.style.width = target + '%';
+    lblEl.style.color = color;
   }, 60);
 }
 
-/* ─── ANALYZE ─────────────────────────────────────────────────── */
+function showView(id) {
+  ['emptyState','loader','analyzeResults','improveView'].forEach(v => {
+    const el = document.getElementById(v);
+    el.style.display = 'none';
+  });
+  const target = document.getElementById(id);
+  target.style.display = (id === 'analyzeResults' || id === 'improveView') ? 'flex' : (id === 'emptyState' ? 'flex' : 'block');
+  document.getElementById('resultsInner').scrollTop = 0;
+}
+
+function showAnalyze() { showView('analyzeResults'); }
+function showImprove() {
+  showView('improveView');
+  if (document.getElementById('improveResults').style.display === 'none' &&
+      document.getElementById('improveLoader').style.display === 'none') {
+    runImprove();
+  }
+}
+
 async function analyze() {
   const jobDesc = document.getElementById('jobDesc').value.trim();
   const file    = document.getElementById('resumeFile').files[0];
   if (!jobDesc || !file) { alert('Please paste a job description and upload your resume.'); return; }
 
-  const btn    = document.getElementById('analyzeBtn');
-  const empty  = document.getElementById('emptyState');
-  const loader = document.getElementById('loader');
+  const btn = document.getElementById('analyzeBtn');
+  btn.disabled = true; btn.classList.add('is-loading');
 
-  btn.disabled = true;
-  btn.classList.add('is-loading');
-  empty.style.display  = 'none';
-  loader.style.display = 'block';
-
-  // Hide all result panels and the improve panel
-  ['scoreCard','skillsCard','recsCard','improveBtn'].forEach(id => {
-    document.getElementById(id).style.display = 'none';
-  });
-  // Reset improve panel fully
-  document.getElementById('improvePanel').style.display   = 'none';
   document.getElementById('improveLoader').style.display  = 'none';
   document.getElementById('improveResults').style.display = 'none';
+
+  showView('loader');
 
   const fd = new FormData();
   fd.append('job_description', jobDesc);
@@ -830,82 +636,60 @@ async function analyze() {
   try {
     const res  = await fetch('/analyze', { method: 'POST', body: fd });
     const data = await res.json();
-    loader.style.display = 'none';
 
-    // Score card
-    document.getElementById('scoreCard').style.display = 'block';
     animateScore(data.match_percent);
     document.getElementById('scoreLabel').textContent = scoreLabel(data.match_percent);
     document.getElementById('scoreDesc').textContent  = scoreDesc(data.match_percent);
 
-    // Skills card
-    setTimeout(() => {
-      document.getElementById('skillsCard').style.display = 'block';
+    const missing = (data.missing_skills || []).slice(0, 20);
+    document.getElementById('missingCount').textContent = missing.length;
+    const missingGrid = document.getElementById('skillsGrid');
+    missingGrid.innerHTML = '';
+    missing.forEach((s, i) => {
+      const tag = document.createElement('span');
+      tag.className = 'tag tag-no';
+      tag.style.animationDelay = (i * 22) + 'ms';
+      tag.textContent = toDisplay(s);
+      missingGrid.appendChild(tag);
+    });
 
-      const missing = (data.missing_skills || []).slice(0, 20);
-      document.getElementById('missingCount').textContent = missing.length;
-      const missingGrid = document.getElementById('skillsGrid');
-      missingGrid.innerHTML = '';
-      missing.forEach((s, i) => {
+    const matched = (data.matched_skills || []).slice(0, 20);
+    document.getElementById('matchedCount').textContent = matched.length;
+    const matchedGrid = document.getElementById('matchedGrid');
+    matchedGrid.innerHTML = '';
+    if (matched.length > 0) {
+      matched.forEach((s, i) => {
         const tag = document.createElement('span');
-        tag.className = 'tag tag-no';
-        tag.style.animationDelay = (i * 28) + 'ms';
+        tag.className = 'tag tag-ok';
+        tag.style.animationDelay = (i * 22) + 'ms';
         tag.textContent = toDisplay(s);
-        missingGrid.appendChild(tag);
+        matchedGrid.appendChild(tag);
       });
+      document.getElementById('matchedNote').style.display = 'none';
+    } else {
+      document.getElementById('matchedNote').style.display = 'block';
+    }
 
-      const matched = (data.matched_skills || []).slice(0, 20);
-      document.getElementById('matchedCount').textContent = matched.length;
-      const matchedGrid = document.getElementById('matchedGrid');
-      matchedGrid.innerHTML = '';
-      if (matched.length > 0) {
-        matched.forEach((s, i) => {
-          const tag = document.createElement('span');
-          tag.className = 'tag tag-ok';
-          tag.style.animationDelay = (i * 28) + 'ms';
-          tag.textContent = toDisplay(s);
-          matchedGrid.appendChild(tag);
-        });
-        document.getElementById('matchedNote').style.display = 'none';
-      } else {
-        document.getElementById('matchedNote').style.display = 'block';
-      }
-    }, 220);
-
-    // Recs + improve button
-    setTimeout(() => {
-      document.getElementById('recsCard').style.display  = 'block';
-      document.getElementById('recText').textContent     = data.recommendations;
-      document.getElementById('improveBtn').style.display = 'block';
-    }, 440);
+    document.getElementById('recText').textContent = data.recommendations;
+    showView('analyzeResults');
 
   } catch (err) {
-    loader.style.display = 'none';
-    empty.style.display  = 'flex';
+    showView('emptyState');
     alert('Something went wrong. Make sure the server is running:\nuvicorn backend.main:app --reload');
   } finally {
-    btn.disabled = false;
-    btn.classList.remove('is-loading');
+    btn.disabled = false; btn.classList.remove('is-loading');
   }
 }
 
-/* ─── IMPROVE ─────────────────────────────────────────────────── */
-async function improve() {
+async function runImprove() {
   const jobDesc = document.getElementById('jobDesc').value.trim();
   const file    = document.getElementById('resumeFile').files[0];
   if (!jobDesc || !file) { alert('Please run an analysis first.'); return; }
 
-  const panel   = document.getElementById('improvePanel');
   const loader  = document.getElementById('improveLoader');
   const results = document.getElementById('improveResults');
-
-  // Show panel + loader, hide results
-  panel.style.display   = 'flex';
   loader.style.display  = 'flex';
   results.style.display = 'none';
-
-  // Scroll to panel
-  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
   const fd = new FormData();
   fd.append('job_description', jobDesc);
@@ -914,43 +698,29 @@ async function improve() {
   try {
     const res  = await fetch('/improve', { method: 'POST', body: fd });
     const data = await res.json();
-
     loader.style.display = 'none';
 
-    // Populate summary
     document.getElementById('summaryText').textContent = data.summary || '';
 
-    // Populate bullet rewrites
     const list = document.getElementById('bulletList');
     list.innerHTML = '';
     (data.bullet_analysis || []).forEach(b => {
       const row = document.createElement('div');
-      row.style.cssText = `
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-        padding: 12px;
-        border-radius: var(--r);
-        background: var(--raised);
-        border: 1px solid var(--border);
-      `;
+      row.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px;border-radius:var(--r);background:var(--raised);border:1px solid var(--border);';
       row.innerHTML = `
         <div>
-          <p style="font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--red); text-transform:uppercase; letter-spacing:.1em; margin-bottom:6px;">Original</p>
-          <p style="font-size:12px; color:var(--t2); line-height:1.65;">${escHtml(b.original)}</p>
+          <p style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--red);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px;">Original</p>
+          <p style="font-size:11.5px;color:var(--t2);line-height:1.6;">${escHtml(b.original)}</p>
         </div>
         <div>
-          <p style="font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--em); text-transform:uppercase; letter-spacing:.1em; margin-bottom:6px;">Improved</p>
-          <p style="font-size:12px; color:var(--t1); line-height:1.65;">${escHtml(b.improved)}</p>
-        </div>
-      `;
+          <p style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--em);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px;">Improved</p>
+          <p style="font-size:11.5px;color:var(--t1);line-height:1.6;">${escHtml(b.improved)}</p>
+        </div>`;
       list.appendChild(row);
     });
 
-    // Populate full resume text
     document.getElementById('fullResumeText').textContent = data.improved_resume || '';
 
-    // Show results, default to rewrites tab
     results.style.display = 'flex';
     switchTab('rewrites');
 
@@ -960,37 +730,26 @@ async function improve() {
   }
 }
 
-/* ─── TAB SWITCHER ────────────────────────────────────────────── */
 function switchTab(tab) {
   const isRewrites = tab === 'rewrites';
-
   document.getElementById('tab-rewrites').classList.toggle('active', isRewrites);
   document.getElementById('tab-resume').classList.toggle('active', !isRewrites);
-
   document.getElementById('panel-rewrites').style.display = isRewrites ? 'block' : 'none';
   document.getElementById('panel-resume').style.display   = isRewrites ? 'none'  : 'block';
 }
 
-/* ─── DOWNLOAD ────────────────────────────────────────────────── */
 function downloadResume() {
   const text = document.getElementById('fullResumeText').textContent;
   if (!text) { alert('No improved resume to download yet.'); return; }
   const blob = new Blob([text], { type: 'text/plain' });
   const url  = URL.createObjectURL(blob);
   const a    = document.createElement('a');
-  a.href     = url;
-  a.download = 'improved_resume.txt';
-  a.click();
+  a.href = url; a.download = 'improved_resume.txt'; a.click();
   URL.revokeObjectURL(url);
 }
 
-/* ─── UTILS ───────────────────────────────────────────────────── */
 function escHtml(str) {
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 </script>
 </body>
